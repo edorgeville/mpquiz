@@ -39,6 +39,8 @@ var app1 = new Vue({
       { text: 'Radio 3 (disabled)', value: 'radio3', disabled: true },
       { text: 'Radio 4', value: 'radio4' }
     ],
+    timeMessage: 'Standby',
+    timeleft: 0,
 
     msgRecvd: '[Nothing]',
     msgsReceived: 0,
@@ -174,6 +176,12 @@ var app1 = new Vue({
         vueApp.selectedAnswer = null
         vueApp.question = msg.payload.question
         vueApp.answers = msg.payload.answers
+      }
+      if (msg.topic === 'timeleft') {
+        vueApp.timeleft = msg.payload
+      }
+      if (msg.topic === 'timeMessage') {
+        vueApp.timeMessage = msg.payload
       }
     })
     // As we receive new messages, we get an updated count as well

@@ -431,7 +431,7 @@
         "y": 560,
         "wires": [
             [
-                "63ebb2fb.c780bc"
+                "48c37a9b.aee8b4"
             ]
         ]
     },
@@ -514,5 +514,243 @@
             ]
         ],
         "l": false
+    },
+    {
+        "id": "a17655e3.5f2ab8",
+        "type": "mytimeout",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "outtopic": "",
+        "outsafe": "Go!",
+        "outwarning": "Hurry up!",
+        "outunsafe": "Time's out!",
+        "warning": "",
+        "timer": "",
+        "debug": false,
+        "ndebug": false,
+        "ignoreCase": false,
+        "repeat": false,
+        "again": false,
+        "x": 610,
+        "y": 740,
+        "wires": [
+            [
+                "6d591598.406c5c"
+            ],
+            [
+                "6480e33c.e56f4c"
+            ]
+        ]
+    },
+    {
+        "id": "79a62274.61f66c",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 240,
+        "y": 740,
+        "wires": [
+            [
+                "4d63487d.74ae38"
+            ]
+        ]
+    },
+    {
+        "id": "4d63487d.74ae38",
+        "type": "template",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "yaml",
+        "syntax": "mustache",
+        "template": "---\npayload: on\ntimeout: 10\nwarning: 2",
+        "output": "yaml",
+        "x": 420,
+        "y": 740,
+        "wires": [
+            [
+                "a17655e3.5f2ab8"
+            ]
+        ]
+    },
+    {
+        "id": "6480e33c.e56f4c",
+        "type": "change",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "timeleft",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 790,
+        "y": 760,
+        "wires": [
+            [
+                "76faccd2.7c2824"
+            ]
+        ]
+    },
+    {
+        "id": "f0173be7.c781b8",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "payload": "on",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 410,
+        "y": 800,
+        "wires": [
+            [
+                "a17655e3.5f2ab8"
+            ]
+        ]
+    },
+    {
+        "id": "a3386f73.e3d0d",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "payload": "off",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 410,
+        "y": 840,
+        "wires": [
+            [
+                "a17655e3.5f2ab8"
+            ]
+        ]
+    },
+    {
+        "id": "79da9006.ba2f5",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "payload": "cancel",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 410,
+        "y": 880,
+        "wires": [
+            [
+                "a17655e3.5f2ab8"
+            ]
+        ]
+    },
+    {
+        "id": "e3a13a28.5e7b68",
+        "type": "link in",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "links": [
+            "76faccd2.7c2824",
+            "48c37a9b.aee8b4"
+        ],
+        "x": 560,
+        "y": 300,
+        "wires": [
+            [
+                "63ebb2fb.c780bc"
+            ]
+        ]
+    },
+    {
+        "id": "76faccd2.7c2824",
+        "type": "link out",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "links": [
+            "e3a13a28.5e7b68"
+        ],
+        "x": 915,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "6d591598.406c5c",
+        "type": "change",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "timeMessage",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 790,
+        "y": 720,
+        "wires": [
+            [
+                "76faccd2.7c2824"
+            ]
+        ]
+    },
+    {
+        "id": "b111ba2b.a9ab08",
+        "type": "link in",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "links": [
+            "48c37a9b.aee8b4"
+        ],
+        "x": 295,
+        "y": 700,
+        "wires": [
+            [
+                "4d63487d.74ae38"
+            ]
+        ]
+    },
+    {
+        "id": "48c37a9b.aee8b4",
+        "type": "link out",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "links": [
+            "e3a13a28.5e7b68",
+            "b111ba2b.a9ab08"
+        ],
+        "x": 875,
+        "y": 560,
+        "wires": []
     }
 ]
