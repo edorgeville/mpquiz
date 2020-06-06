@@ -1,0 +1,8 @@
+version: '3.0'
+services:
+  node-red:
+    build: .
+    ports:
+      - 1880:1880
+    volumes:
+      - ./app:/data

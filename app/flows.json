@@ -1,0 +1,547 @@
+[
+    {
+        "id": "a4c1dacb.0aa0d8",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "46622bfc.eed084",
+        "type": "subflow",
+        "name": "sessionId split to socketIds",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 180,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "421b4a98.4596b4"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1300,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "268ca40d.28d06c",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "63ebb2fb.c780bc",
+        "type": "uibuilder",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "url": "quiz",
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "showfolder": false,
+        "x": 670,
+        "y": 340,
+        "wires": [
+            [
+                "8f3fb963.05e558",
+                "28fdd81c.135de8"
+            ],
+            [
+                "2c470152.92e29e"
+            ]
+        ]
+    },
+    {
+        "id": "8f3fb963.05e558",
+        "type": "link out",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "links": [
+            "92906be6.e74ce8"
+        ],
+        "x": 800,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "92906be6.e74ce8",
+        "type": "link in",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "links": [
+            "8f3fb963.05e558"
+        ],
+        "x": 540,
+        "y": 260,
+        "wires": [
+            [
+                "63ebb2fb.c780bc"
+            ]
+        ]
+    },
+    {
+        "id": "28fdd81c.135de8",
+        "type": "function",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "Update sessions",
+        "func": "const sessions = global.get('sessions') || {}\n\nconst sessionId = msg.sessionId\nconst socketId = msg._socketId\n\nconst session = sessions[sessionId] || {socketIds: []}\n\n\nif (!session.socketIds.includes(socketId)) {\n    session.socketIds.push(socketId)\n    sessions[sessionId] = session\n    global.set('sessions', sessions)\n}\n\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 890,
+        "y": 280,
+        "wires": [
+            [
+                "74f23c4c.564a24"
+            ]
+        ]
+    },
+    {
+        "id": "b39760f8.1681b",
+        "type": "debug",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1390,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "2c470152.92e29e",
+        "type": "switch",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "client disconnect",
+        "property": "uibuilderCtrl",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "client disconnect",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 870,
+        "y": 420,
+        "wires": [
+            [
+                "f4610b3f.13dd48"
+            ]
+        ]
+    },
+    {
+        "id": "f4610b3f.13dd48",
+        "type": "function",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "Remove from sessions",
+        "func": "const sessions = global.get('sessions') || {}\n\nconst socketId = msg._socketId\n\nlet dirty = false\n\nfor (const sessionId in sessions) {\n    const session = sessions[sessionId]\n    if (session.socketIds.includes(socketId)) {\n        dirty = true\n        session.socketIds = session.socketIds.filter(v => v !== socketId)\n        sessions[sessionId] = session\n    }\n}\n\nif (dirty) {\n    global.set('sessions', sessions)\n    msg.payload = `Removed socket \"${socketId} from sessions\"`\n} else {\n    msg.payload = null\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1120,
+        "y": 420,
+        "wires": [
+            [
+                "11fc2c23.10c654"
+            ]
+        ]
+    },
+    {
+        "id": "11fc2c23.10c654",
+        "type": "debug",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1330,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "459911ab.41834",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0",
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "abfe8019.378a9"
+            ]
+        ]
+    },
+    {
+        "id": "abfe8019.378a9",
+        "type": "change",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "sessions",
+                "pt": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 380,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "69aa850a.b0664c",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "59EV",
+        "payload": "test",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 340,
+        "wires": [
+            [
+                "b4692823.098818"
+            ]
+        ]
+    },
+    {
+        "id": "71932bab.8a6204",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "W7WK",
+        "payload": "hello world",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 380,
+        "wires": [
+            [
+                "b4692823.098818"
+            ]
+        ]
+    },
+    {
+        "id": "421b4a98.4596b4",
+        "type": "function",
+        "z": "46622bfc.eed084",
+        "name": "socketId to socketId/payload pairs",
+        "func": "const sessions = global.get('sessions') || {}\nconst sessionId = msg.socketId\nconst session = sessions[sessionId]\nconst pl = {}\n\nfor (const socketId of session.socketIds) {\n    pl[socketId] = msg.payload\n}\nmsg.payload = pl\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 700,
+        "y": 80,
+        "wires": [
+            [
+                "da8ea885.26de48"
+            ]
+        ]
+    },
+    {
+        "id": "da8ea885.26de48",
+        "type": "split",
+        "z": "46622bfc.eed084",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "_socketId",
+        "x": 930,
+        "y": 80,
+        "wires": [
+            [
+                "268ca40d.28d06c"
+            ]
+        ]
+    },
+    {
+        "id": "268ca40d.28d06c",
+        "type": "change",
+        "z": "46622bfc.eed084",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "parts",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1130,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b4692823.098818",
+        "type": "subflow:46622bfc.eed084",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "env": [],
+        "x": 400,
+        "y": 340,
+        "wires": [
+            [
+                "63ebb2fb.c780bc"
+            ]
+        ]
+    },
+    {
+        "id": "74f23c4c.564a24",
+        "type": "change",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "sessionId",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1070,
+        "y": 280,
+        "wires": [
+            [
+                "61caa82f.ea5278"
+            ]
+        ]
+    },
+    {
+        "id": "a4857dc4.56899",
+        "type": "template",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "Question 1",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "yaml",
+        "syntax": "mustache",
+        "template": "---\nquestion: Question?\nanswers:\n    - Réponse A\n    - Réponse B\n    - Réponse C\n    - Réponse D",
+        "output": "yaml",
+        "x": 230,
+        "y": 520,
+        "wires": [
+            [
+                "efd0c09f.0bc63"
+            ]
+        ]
+    },
+    {
+        "id": "2a506956.840a26",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 115,
+        "y": 520,
+        "wires": [
+            [
+                "a4857dc4.56899"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "efd0c09f.0bc63",
+        "type": "function",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "Answers array to text/value pairs",
+        "func": "msg.payload.answers = msg.payload.answers.map((question, index) => {\n    return {\n        text: question,\n        value: String.fromCharCode(index + 65) // A == 65, B == 66, etc\n    }\n})\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 490,
+        "y": 560,
+        "wires": [
+            [
+                "a6f69435.67b368"
+            ]
+        ]
+    },
+    {
+        "id": "61caa82f.ea5278",
+        "type": "switch",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1240,
+        "y": 280,
+        "wires": [
+            [
+                "b39760f8.1681b"
+            ]
+        ]
+    },
+    {
+        "id": "a6f69435.67b368",
+        "type": "change",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "question",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 560,
+        "wires": [
+            [
+                "63ebb2fb.c780bc"
+            ]
+        ]
+    },
+    {
+        "id": "5f8a0871.c57338",
+        "type": "template",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "Question 2",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "yaml",
+        "syntax": "mustache",
+        "template": "---\nquestion: De quelle couleur était le cheval blanc d'Henri 4?\nanswers:\n    - Bleu\n    - Blanc\n    - Rouge\n    - Vert",
+        "output": "yaml",
+        "x": 230,
+        "y": 560,
+        "wires": [
+            [
+                "efd0c09f.0bc63"
+            ]
+        ]
+    },
+    {
+        "id": "6cdb9f5b.d368c",
+        "type": "template",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "Question 3",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "yaml",
+        "syntax": "mustache",
+        "template": "---\nquestion: Question?\nanswers:\n    - Réponse A\n    - Réponse B\n    - Réponse C\n    - Réponse D",
+        "output": "yaml",
+        "x": 230,
+        "y": 600,
+        "wires": [
+            [
+                "efd0c09f.0bc63"
+            ]
+        ]
+    },
+    {
+        "id": "50a5d924.30ee58",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 115,
+        "y": 560,
+        "wires": [
+            [
+                "5f8a0871.c57338"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "f110c9b8.d8b858",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 115,
+        "y": 600,
+        "wires": [
+            [
+                "6cdb9f5b.d368c"
+            ]
+        ],
+        "l": false
+    }
+]
