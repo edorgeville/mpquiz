@@ -171,6 +171,7 @@ var app1 = new Vue({
       // console.info('[indexjs:uibuilder.onChange] msg received from Node-RED server:', newVal)
       vueApp.msgRecvd = msg
       if (msg.topic === 'question') {
+        vueApp.selectedAnswer = null
         vueApp.question = msg.payload.question
         vueApp.answers = msg.payload.answers
       }
