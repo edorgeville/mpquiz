@@ -290,55 +290,15 @@
         ]
     },
     {
-        "id": "a4857dc4.56899",
-        "type": "template",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "Question 0",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "yaml",
-        "syntax": "mustache",
-        "template": "---\nindex: 0\nquestion: Question?\nprompts:\n    - Réponse A\n    - Réponse B\n    - Réponse C\n    - Réponse D",
-        "output": "yaml",
-        "x": 230,
-        "y": 520,
-        "wires": [
-            [
-                "efd0c09f.0bc63"
-            ]
-        ]
-    },
-    {
-        "id": "2a506956.840a26",
-        "type": "inject",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 115,
-        "y": 520,
-        "wires": [
-            [
-                "a4857dc4.56899"
-            ]
-        ],
-        "l": false
-    },
-    {
         "id": "efd0c09f.0bc63",
         "type": "function",
         "z": "a4c1dacb.0aa0d8",
         "name": "Answers array to text/value pairs",
-        "func": "msg.payload.answers = msg.payload.prompts.map((prompt, index) => {\n    return {\n        text: prompt,\n        // value: String.fromCharCode(index + 65) // A == 65, B == 66, etc\n        value: index\n    }\n})\nreturn msg;",
+        "func": "msg.payload.prompts = msg.payload.prompts.map((prompt, index) => {\n    return {\n        text: prompt,\n        // value: String.fromCharCode(index + 65) // A == 65, B == 66, etc\n        value: index\n    }\n})\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 490,
-        "y": 560,
+        "x": 570,
+        "y": 580,
         "wires": [
             [
                 "a6f69435.67b368"
@@ -364,94 +324,14 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 630,
-        "y": 740,
+        "x": 830,
+        "y": 580,
         "wires": [
             [
                 "48c37a9b.aee8b4",
                 "70164c8c.3ebd14"
             ]
         ]
-    },
-    {
-        "id": "5f8a0871.c57338",
-        "type": "template",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "Question 1",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "yaml",
-        "syntax": "mustache",
-        "template": "---\nindex: 1\nquestion: De quelle couleur était le cheval blanc d'Henri 4?\nprompts:\n    - Bleu\n    - Blanc\n    - Rouge\n    - Vert",
-        "output": "yaml",
-        "x": 230,
-        "y": 560,
-        "wires": [
-            [
-                "efd0c09f.0bc63"
-            ]
-        ]
-    },
-    {
-        "id": "6cdb9f5b.d368c",
-        "type": "template",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "Question 2",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "yaml",
-        "syntax": "mustache",
-        "template": "---\nindex: 2\nquestion: Question?\nprompts:\n    - Réponse A\n    - Réponse B\n    - Réponse C\n    - Réponse D",
-        "output": "yaml",
-        "x": 230,
-        "y": 600,
-        "wires": [
-            [
-                "efd0c09f.0bc63"
-            ]
-        ]
-    },
-    {
-        "id": "50a5d924.30ee58",
-        "type": "inject",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 115,
-        "y": 560,
-        "wires": [
-            [
-                "5f8a0871.c57338"
-            ]
-        ],
-        "l": false
-    },
-    {
-        "id": "f110c9b8.d8b858",
-        "type": "inject",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 115,
-        "y": 600,
-        "wires": [
-            [
-                "6cdb9f5b.d368c"
-            ]
-        ],
-        "l": false
     },
     {
         "id": "a17655e3.5f2ab8",
@@ -687,8 +567,8 @@
             "e3a13a28.5e7b68",
             "b111ba2b.a9ab08"
         ],
-        "x": 775,
-        "y": 740,
+        "x": 975,
+        "y": 580,
         "wires": []
     },
     {
@@ -827,23 +707,9 @@
         "y": 1240,
         "wires": [
             [
-                "f8f2fe71.7cf4a"
+                "2fffff5e.72445"
             ]
         ]
-    },
-    {
-        "id": "f8f2fe71.7cf4a",
-        "type": "debug",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 990,
-        "y": 1240,
-        "wires": []
     },
     {
         "id": "8fd9cfae.266be",
@@ -854,7 +720,7 @@
         "fieldType": "msg",
         "format": "yaml",
         "syntax": "mustache",
-        "template": "---\n-   question: Question?\n    prompts:\n        - Réponse A\n        - Réponse B\n        - Réponse C\n        - Réponse D\n    answer: 0\n-   question: De quelle couleur était le cheval blanc d'Henri 4?\n    prompts:\n        - Bleu\n        - Blanc\n        - Rouge\n        - Vert\n    answer: 1\n-   question: Combien font 2+2 ?\n    prompts:\n        - 1\n        - 12\n        - 4\n        - 3.14159265359\n    answer: 3",
+        "template": "---\n-   question: Question?\n    prompts:\n        - Réponse A\n        - Réponse B\n        - Réponse C\n        - Réponse D\n    answer: 0\n-   question: De quelle couleur était le cheval blanc d'Henri 4?\n    prompts:\n        - Bleu\n        - Blanc\n        - Rouge\n        - Vert\n    answer: 1\n-   question: Combien font 2+2 ?\n    prompts:\n        - 1\n        - 12\n        - 4\n        - 3.14159265359\n    answer: 2",
         "output": "yaml",
         "x": 370,
         "y": 80,
@@ -917,11 +783,11 @@
         "func": "const steps = global.get('quiz')\nconst step = steps.map(({answer, ...rest}) => rest) // strips answer\n\nmsg.payload = step[msg.payload]\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 370,
-        "y": 740,
+        "x": 290,
+        "y": 580,
         "wires": [
             [
-                "a6f69435.67b368"
+                "efd0c09f.0bc63"
             ]
         ]
     },
@@ -937,8 +803,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 180,
-        "y": 700,
+        "x": 100,
+        "y": 540,
         "wires": [
             [
                 "3f0c98e2.607398"
@@ -957,8 +823,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 180,
-        "y": 740,
+        "x": 100,
+        "y": 580,
         "wires": [
             [
                 "3f0c98e2.607398"
@@ -977,8 +843,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 180,
-        "y": 780,
+        "x": 100,
+        "y": 620,
         "wires": [
             [
                 "3f0c98e2.607398"
@@ -995,8 +861,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 790,
-        "y": 780,
+        "x": 990,
+        "y": 620,
         "wires": []
     },
     {
@@ -1043,23 +909,33 @@
         ]
     },
     {
-        "id": "83cefd08.94197",
-        "type": "comment",
+        "id": "2fffff5e.72445",
+        "type": "function",
         "z": "a4c1dacb.0aa0d8",
-        "name": "OBSOLETE",
-        "info": "",
-        "x": 170,
-        "y": 480,
-        "wires": []
+        "name": "Compute score",
+        "func": "\nconst pl = {}\n\n\nfor (const sessionId in msg.payload) {\n    const session = msg.payload[sessionId]\n    let score = 0\n    Object.entries(session).forEach(([index, step]) => {\n        if (step.valid) {\n            score++\n        }\n    })\n    pl[sessionId] = {score: score, answers: session}\n}\nmsg.payload = pl\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1000,
+        "y": 1240,
+        "wires": [
+            [
+                "57c78a42.196994"
+            ]
+        ]
     },
     {
-        "id": "73983f45.7e8c8",
-        "type": "comment",
+        "id": "57c78a42.196994",
+        "type": "debug",
         "z": "a4c1dacb.0aa0d8",
-        "name": "FRESH AF",
-        "info": "",
-        "x": 160,
-        "y": 660,
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1190,
+        "y": 1240,
         "wires": []
     }
 ]
