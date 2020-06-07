@@ -2,7 +2,7 @@
     {
         "id": "ff75d04f.62496",
         "type": "tab",
-        "label": "Main control",
+        "label": "🛑 Main control",
         "disabled": false,
         "info": ""
     },
@@ -72,9 +72,6 @@
                 "wires": [
                     {
                         "id": "99304e28.d50fa"
-                    },
-                    {
-                        "id": "4a88c712.e56df8"
                     }
                 ]
             }
@@ -1401,34 +1398,15 @@
         "type": "function",
         "z": "ff75d04f.62496",
         "name": "Apply modifier",
-        "func": "const currentModifier = global.get('currentModifier')\nif(msg.payload) {\n    msg.payload = currentModifier.win\n} else {\n    msg.payload = currentModifier.lose\n}\nreturn msg;",
+        "func": "const currentModifier = global.get('currentModifier')\nif(msg.payload) {\n    msg.payload = {...currentModifier.win} // clone instead of reference\n} else {\n    msg.payload = {...currentModifier.lose}\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 295,
-        "y": 800,
+        "x": 300,
+        "y": 760,
         "wires": [
             [
                 "c8a557b9.f51908"
             ]
-        ]
-    },
-    {
-        "id": "74a9565b.8726a8",
-        "type": "http request",
-        "z": "ff75d04f.62496",
-        "name": "",
-        "method": "POST",
-        "ret": "txt",
-        "paytoqs": false,
-        "url": "localhost:1880/api/bank",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "x": 930,
-        "y": 680,
-        "wires": [
-            []
         ]
     },
     {
@@ -1809,8 +1787,8 @@
         "reduceInit": "",
         "reduceInitType": "",
         "reduceFixup": "",
-        "x": 1010,
-        "y": 800,
+        "x": 935,
+        "y": 740,
         "wires": [
             [
                 "6728167c.8bf548"
@@ -1847,8 +1825,8 @@
         "links": [
             "96e2f23a.f1446"
         ],
-        "x": 75,
-        "y": 800,
+        "x": 80,
+        "y": 760,
         "wires": [
             [
                 "a24ec5c4.eb0668"
@@ -1861,8 +1839,8 @@
         "z": "ff75d04f.62496",
         "name": "Apply to each player",
         "info": "",
-        "x": 150,
-        "y": 760,
+        "x": 155,
+        "y": 720,
         "wires": []
     },
     {
@@ -1871,8 +1849,8 @@
         "z": "ff75d04f.62496",
         "name": "All banks updated",
         "info": "",
-        "x": 1050,
-        "y": 760,
+        "x": 975,
+        "y": 700,
         "wires": []
     },
     {
@@ -2123,12 +2101,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 530,
-        "y": 800,
+        "x": 535,
+        "y": 760,
         "wires": [
             [
-                "d33f063c.ae41e8",
-                "8b0738be.116768"
+                "d33f063c.ae41e8"
             ]
         ]
     },
@@ -2138,8 +2115,8 @@
         "z": "ff75d04f.62496",
         "name": "",
         "env": [],
-        "x": 770,
-        "y": 800,
+        "x": 775,
+        "y": 760,
         "wires": [
             [
                 "75eba718.8632b8"
@@ -2242,8 +2219,8 @@
         "tostatus": false,
         "complete": "error",
         "targetType": "msg",
-        "x": 1000,
-        "y": 900,
+        "x": 945,
+        "y": 780,
         "wires": []
     },
     {
@@ -2269,8 +2246,8 @@
             "ee381988.b15428",
             "9f177e4e.ccbd3"
         ],
-        "x": 1095,
-        "y": 800,
+        "x": 1020,
+        "y": 740,
         "wires": []
     },
     {
@@ -2679,33 +2656,5 @@
                 "8f0b0f9e.a477f"
             ]
         ]
-    },
-    {
-        "id": "8b0738be.116768",
-        "type": "debug",
-        "z": "ff75d04f.62496",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 700,
-        "y": 740,
-        "wires": []
-    },
-    {
-        "id": "4a88c712.e56df8",
-        "type": "debug",
-        "z": "47d73e76.0a224",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 170,
-        "y": 220,
-        "wires": []
     }
 ]
