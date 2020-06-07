@@ -19,7 +19,8 @@ var app1 = new Vue({
       // { text: 'Radio 4', value: 'radio4' }
     ],
     timeMessage: 'Standby',
-    timeleft: 0
+    timeleft: 0,
+    scores: {}
   },
   computed: {
     questionLabel: function () {
@@ -41,8 +42,19 @@ var app1 = new Vue({
         Vue.$cookies.set('sessionId', sessionId)
       }
       return sessionId
+    },
+    scoresTable: function () {
+      const scoresTable = []
+      for (const [session, value] of Object.entries(this.scores)) {
+        scoresTable.push({
+          ...value,
+          session: session
+        })
+      }
+      Object.entries(this.scores)
+      return scoresTable
     }
-  }, // --- End of computed --- //
+  },
   methods: {
     send: function (msg) {
       uibuilder.send({
@@ -100,6 +112,9 @@ var app1 = new Vue({
       }
       if (msg.topic === 'timeMessage') {
         vueApp.timeMessage = msg.payload
+      }
+      if (msg.topic === 'scores') {
+        vueApp.scores = msg.payload
       }
     })
 

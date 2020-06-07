@@ -54,7 +54,7 @@
 <body>
     <div id="app" v-cloak>
         <b-container id="app_container">
-            <b-img src="./images/node-blue-192x192.png" rounded left v-bind="imgProps" alt="Blue Node-RED" class="mt-1 mr-2"></b-img>
+            <b-img src="./images/node-blue-192x192.png" rounded left alt="Blue Node-RED" class="mt-1 mr-2"></b-img>
             <h1>
                 {{ sessionId }}
             </h1>
@@ -71,6 +71,8 @@
                 ></b-form-radio-group>
                 <b-button id="btn_increment" pill variant="primary" v-on:click="sendAnswer">Send</b-button>
             </b-form-group>
+
+            <b-table striped hover :items="scoresTable"></b-table>
 
         </b-container>
     </div>

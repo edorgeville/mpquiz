@@ -7,6 +7,20 @@
         "info": ""
     },
     {
+        "id": "5624e464.08ccfc",
+        "type": "tab",
+        "label": "Comms",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "10cb60ee.21f7af",
+        "type": "tab",
+        "label": "Bank",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "46622bfc.eed084",
         "type": "subflow",
         "name": "sessionId split to socketIds",
@@ -37,102 +51,6 @@
         ],
         "env": [],
         "color": "#DDAA99"
-    },
-    {
-        "id": "63ebb2fb.c780bc",
-        "type": "uibuilder",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "topic": "",
-        "url": "quiz",
-        "fwdInMessages": false,
-        "allowScripts": false,
-        "allowStyles": false,
-        "copyIndex": true,
-        "showfolder": false,
-        "x": 670,
-        "y": 340,
-        "wires": [
-            [
-                "28fdd81c.135de8"
-            ],
-            [
-                "2c470152.92e29e"
-            ]
-        ]
-    },
-    {
-        "id": "28fdd81c.135de8",
-        "type": "function",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "Update sessions",
-        "func": "const sessions = global.get('sessions') || {}\n\nconst sessionId = msg.sessionId\nconst socketId = msg._socketId\n\nconst session = sessions[sessionId] || {socketIds: []}\n\n\nif (!session.socketIds.includes(socketId)) {\n    session.socketIds.push(socketId)\n    sessions[sessionId] = session\n    global.set('sessions', sessions)\n}\n\n\nreturn msg",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 890,
-        "y": 280,
-        "wires": [
-            [
-                "61caa82f.ea5278",
-                "77c54779.bc6258"
-            ]
-        ]
-    },
-    {
-        "id": "2c470152.92e29e",
-        "type": "switch",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "client disconnect",
-        "property": "uibuilderCtrl",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "client disconnect",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 870,
-        "y": 420,
-        "wires": [
-            [
-                "f4610b3f.13dd48"
-            ]
-        ]
-    },
-    {
-        "id": "f4610b3f.13dd48",
-        "type": "function",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "Remove from sessions",
-        "func": "const sessions = global.get('sessions') || {}\n\nconst socketId = msg._socketId\n\nlet dirty = false\n\nfor (const sessionId in sessions) {\n    const session = sessions[sessionId]\n    if (session.socketIds.includes(socketId)) {\n        dirty = true\n        session.socketIds = session.socketIds.filter(v => v !== socketId)\n        sessions[sessionId] = session\n    }\n}\n\nif (dirty) {\n    global.set('sessions', sessions)\n    msg.payload = `Removed socket \"${socketId} from sessions\"`\n} else {\n    msg.payload = null\n}\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1120,
-        "y": 420,
-        "wires": [
-            [
-                "11fc2c23.10c654"
-            ]
-        ]
-    },
-    {
-        "id": "11fc2c23.10c654",
-        "type": "debug",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": true,
-        "complete": "payload",
-        "targetType": "msg",
-        "x": 1330,
-        "y": 420,
-        "wires": []
     },
     {
         "id": "459911ab.41834",
@@ -175,46 +93,6 @@
         "y": 120,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "69aa850a.b0664c",
-        "type": "inject",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "topic": "59EV",
-        "payload": "test",
-        "payloadType": "str",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 180,
-        "y": 340,
-        "wires": [
-            [
-                "b4692823.098818"
-            ]
-        ]
-    },
-    {
-        "id": "71932bab.8a6204",
-        "type": "inject",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "topic": "W7WK",
-        "payload": "hello world",
-        "payloadType": "str",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 150,
-        "y": 380,
-        "wires": [
-            [
-                "b4692823.098818"
-            ]
         ]
     },
     {
@@ -273,20 +151,6 @@
         "y": 80,
         "wires": [
             []
-        ]
-    },
-    {
-        "id": "b4692823.098818",
-        "type": "subflow:46622bfc.eed084",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "env": [],
-        "x": 400,
-        "y": 340,
-        "wires": [
-            [
-                "63ebb2fb.c780bc"
-            ]
         ]
     },
     {
@@ -487,29 +351,13 @@
         ]
     },
     {
-        "id": "e3a13a28.5e7b68",
-        "type": "link in",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "links": [
-            "76faccd2.7c2824",
-            "48c37a9b.aee8b4"
-        ],
-        "x": 560,
-        "y": 300,
-        "wires": [
-            [
-                "63ebb2fb.c780bc"
-            ]
-        ]
-    },
-    {
         "id": "76faccd2.7c2824",
         "type": "link out",
         "z": "a4c1dacb.0aa0d8",
         "name": "",
         "links": [
-            "e3a13a28.5e7b68"
+            "e3a13a28.5e7b68",
+            "a9740e20.734df"
         ],
         "x": 1855,
         "y": 860,
@@ -565,115 +413,12 @@
         "name": "",
         "links": [
             "e3a13a28.5e7b68",
-            "b111ba2b.a9ab08"
+            "b111ba2b.a9ab08",
+            "a9740e20.734df"
         ],
         "x": 975,
         "y": 580,
         "wires": []
-    },
-    {
-        "id": "b39760f8.1681b",
-        "type": "debug",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1310,
-        "y": 280,
-        "wires": []
-    },
-    {
-        "id": "61caa82f.ea5278",
-        "type": "switch",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "nempty"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 1110,
-        "y": 280,
-        "wires": [
-            [
-                "b39760f8.1681b"
-            ]
-        ]
-    },
-    {
-        "id": "77c54779.bc6258",
-        "type": "link out",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "links": [
-            "df39b260.08ee5"
-        ],
-        "x": 1015,
-        "y": 320,
-        "wires": []
-    },
-    {
-        "id": "df39b260.08ee5",
-        "type": "link in",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "links": [
-            "77c54779.bc6258"
-        ],
-        "x": 1095,
-        "y": 320,
-        "wires": [
-            [
-                "58d1e202.68f83c"
-            ]
-        ]
-    },
-    {
-        "id": "58d1e202.68f83c",
-        "type": "switch",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "property": "topic",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "eq",
-                "v": "answer",
-                "vt": "str"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 1230,
-        "y": 320,
-        "wires": [
-            [
-                "8bc10ae7.075fa8"
-            ]
-        ]
-    },
-    {
-        "id": "8bc10ae7.075fa8",
-        "type": "function",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "Store answer",
-        "func": "const answers = global.get('answers') || {}\n\nconst sessionId = msg.sessionId\nconst questionIndex = msg.payload.questionIndex\nconst answer = msg.payload.answer\n\nconst sessionAnswers = answers[sessionId] || {}\n\nsessionAnswers[questionIndex] = answer\n\n// store back\nanswers[sessionId] = sessionAnswers\nglobal.set('answers', answers)\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1410,
-        "y": 320,
-        "wires": [
-            []
-        ]
     },
     {
         "id": "2c5cc44c.27401c",
@@ -720,7 +465,7 @@
         "fieldType": "msg",
         "format": "yaml",
         "syntax": "mustache",
-        "template": "---\n-   question: Question?\n    prompts:\n        - Réponse A\n        - Réponse B\n        - Réponse C\n        - Réponse D\n    answer: 0\n-   question: De quelle couleur était le cheval blanc d'Henri 4?\n    prompts:\n        - Bleu\n        - Blanc\n        - Rouge\n        - Vert\n    answer: 1\n-   question: Combien font 2+2 ?\n    prompts:\n        - 1\n        - 12\n        - 4\n        - 3.14159265359\n    answer: 2",
+        "template": "---\n-   question: Question?\n    prompts:\n        - Réponse A\n        - Réponse B\n        - Réponse C\n        - Réponse D\n    answer: 0\n    value: 5\n-   question: De quelle couleur était le cheval blanc d'Henri 4?\n    prompts:\n        - Bleu\n        - Blanc\n        - Rouge\n        - Vert\n    answer: 1\n    value: 10\n-   question: Combien font 2+2 ?\n    prompts:\n        - 1\n        - 12\n        - 4\n        - 3.14159265359\n    answer: 2\n    value: 50",
         "output": "yaml",
         "x": 370,
         "y": 80,
@@ -920,7 +665,8 @@
         "y": 1240,
         "wires": [
             [
-                "57c78a42.196994"
+                "57c78a42.196994",
+                "ccf29298.8059a"
             ]
         ]
     },
@@ -937,5 +683,410 @@
         "x": 1190,
         "y": 1240,
         "wires": []
+    },
+    {
+        "id": "ccf29298.8059a",
+        "type": "change",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "scores",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1170,
+        "y": 1300,
+        "wires": [
+            [
+                "79e05a9e.9aa7f4"
+            ]
+        ]
+    },
+    {
+        "id": "79e05a9e.9aa7f4",
+        "type": "link out",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "links": [
+            "e3a13a28.5e7b68",
+            "a9740e20.734df"
+        ],
+        "x": 1300,
+        "y": 1300,
+        "wires": []
+    },
+    {
+        "id": "736f38c0.268c08",
+        "type": "subflow:46622bfc.eed084",
+        "z": "5624e464.08ccfc",
+        "name": "",
+        "env": [],
+        "x": 420,
+        "y": 300,
+        "wires": [
+            [
+                "11877fcc.be60b"
+            ]
+        ]
+    },
+    {
+        "id": "caa90d8.674c5f",
+        "type": "inject",
+        "z": "5624e464.08ccfc",
+        "name": "",
+        "topic": "59EV",
+        "payload": "test",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 200,
+        "y": 300,
+        "wires": [
+            [
+                "736f38c0.268c08"
+            ]
+        ]
+    },
+    {
+        "id": "f8ca610e.2722a",
+        "type": "inject",
+        "z": "5624e464.08ccfc",
+        "name": "",
+        "topic": "W7WK",
+        "payload": "hello world",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 340,
+        "wires": [
+            [
+                "736f38c0.268c08"
+            ]
+        ]
+    },
+    {
+        "id": "11877fcc.be60b",
+        "type": "uibuilder",
+        "z": "5624e464.08ccfc",
+        "name": "",
+        "topic": "",
+        "url": "quiz",
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "showfolder": false,
+        "x": 690,
+        "y": 300,
+        "wires": [
+            [
+                "8b0edec4.fc5a6"
+            ],
+            [
+                "3274ed52.c78d82"
+            ]
+        ]
+    },
+    {
+        "id": "8b0edec4.fc5a6",
+        "type": "function",
+        "z": "5624e464.08ccfc",
+        "name": "Update sessions",
+        "func": "const sessions = global.get('sessions') || {}\n\nconst sessionId = msg.sessionId\nconst socketId = msg._socketId\n\nconst session = sessions[sessionId] || {socketIds: []}\n\n\nif (!session.socketIds.includes(socketId)) {\n    session.socketIds.push(socketId)\n    sessions[sessionId] = session\n    global.set('sessions', sessions)\n}\n\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 910,
+        "y": 240,
+        "wires": [
+            [
+                "7744f9d9.116908",
+                "9fce8e84.5c5e6"
+            ]
+        ]
+    },
+    {
+        "id": "3274ed52.c78d82",
+        "type": "switch",
+        "z": "5624e464.08ccfc",
+        "name": "client disconnect",
+        "property": "uibuilderCtrl",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "client disconnect",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 890,
+        "y": 380,
+        "wires": [
+            [
+                "12699df6.b4d3f2"
+            ]
+        ]
+    },
+    {
+        "id": "a9740e20.734df",
+        "type": "link in",
+        "z": "5624e464.08ccfc",
+        "name": "",
+        "links": [
+            "76faccd2.7c2824",
+            "48c37a9b.aee8b4",
+            "79e05a9e.9aa7f4"
+        ],
+        "x": 580,
+        "y": 260,
+        "wires": [
+            [
+                "11877fcc.be60b"
+            ]
+        ]
+    },
+    {
+        "id": "7744f9d9.116908",
+        "type": "switch",
+        "z": "5624e464.08ccfc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1130,
+        "y": 240,
+        "wires": [
+            [
+                "fa5046ef.f3d648"
+            ]
+        ]
+    },
+    {
+        "id": "9fce8e84.5c5e6",
+        "type": "link out",
+        "z": "5624e464.08ccfc",
+        "name": "",
+        "links": [
+            "df39b260.08ee5",
+            "d49b54b9.67ba68"
+        ],
+        "x": 1035,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "12699df6.b4d3f2",
+        "type": "function",
+        "z": "5624e464.08ccfc",
+        "name": "Remove from sessions",
+        "func": "const sessions = global.get('sessions') || {}\n\nconst socketId = msg._socketId\n\nlet dirty = false\n\nfor (const sessionId in sessions) {\n    const session = sessions[sessionId]\n    if (session.socketIds.includes(socketId)) {\n        dirty = true\n        session.socketIds = session.socketIds.filter(v => v !== socketId)\n        sessions[sessionId] = session\n    }\n}\n\nif (dirty) {\n    global.set('sessions', sessions)\n    msg.payload = `Removed socket \"${socketId} from sessions\"`\n} else {\n    msg.payload = null\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1140,
+        "y": 380,
+        "wires": [
+            [
+                "d6f2e47d.bfa398"
+            ]
+        ]
+    },
+    {
+        "id": "fa5046ef.f3d648",
+        "type": "debug",
+        "z": "5624e464.08ccfc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1330,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "d6f2e47d.bfa398",
+        "type": "debug",
+        "z": "5624e464.08ccfc",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": true,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1350,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "d49b54b9.67ba68",
+        "type": "link in",
+        "z": "5624e464.08ccfc",
+        "name": "",
+        "links": [
+            "77c54779.bc6258",
+            "9fce8e84.5c5e6"
+        ],
+        "x": 775,
+        "y": 520,
+        "wires": [
+            [
+                "8c494f7c.20e1f"
+            ]
+        ]
+    },
+    {
+        "id": "8c494f7c.20e1f",
+        "type": "switch",
+        "z": "5624e464.08ccfc",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "answer",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 910,
+        "y": 520,
+        "wires": [
+            [
+                "d8f0c300.6cf85"
+            ]
+        ]
+    },
+    {
+        "id": "d8f0c300.6cf85",
+        "type": "function",
+        "z": "5624e464.08ccfc",
+        "name": "Store answer",
+        "func": "const answers = global.get('answers') || {}\n\nconst sessionId = msg.sessionId\nconst questionIndex = msg.payload.questionIndex\nconst answer = msg.payload.answer\n\nconst sessionAnswers = answers[sessionId] || {}\n\nsessionAnswers[questionIndex] = answer\n\n// store back\nanswers[sessionId] = sessionAnswers\nglobal.set('answers', answers)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1090,
+        "y": 520,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2e09a623.8112da",
+        "type": "inject",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 460,
+        "y": 160,
+        "wires": [
+            [
+                "e2ed4508.7804c8"
+            ]
+        ]
+    },
+    {
+        "id": "e2ed4508.7804c8",
+        "type": "change",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "bank",
+                "pt": "global",
+                "to": "{}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 660,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8994828b.567b5",
+        "type": "link out",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "links": [
+            "799d8292.dbea0c"
+        ],
+        "x": 455,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "799d8292.dbea0c",
+        "type": "link in",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "links": [
+            "8994828b.567b5"
+        ],
+        "x": 215,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "99aa3eb2.8e654",
+        "type": "inject",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 260,
+        "y": 540,
+        "wires": [
+            [
+                "8994828b.567b5"
+            ]
+        ]
     }
 ]
