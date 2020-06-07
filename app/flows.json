@@ -121,6 +121,39 @@
         }
     },
     {
+        "id": "c2d341a8.d003e",
+        "type": "subflow",
+        "name": "getAllBanks",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "f26f80bf.7566f"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 520,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "96151a5e.763098",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#C7E9C0",
+        "icon": "font-awesome/fa-dollar"
+    },
+    {
         "id": "459911ab.41834",
         "type": "inject",
         "z": "a4c1dacb.0aa0d8",
@@ -524,12 +557,17 @@
                 "vt": "str"
             },
             {
+                "t": "eq",
+                "v": "refreshBanks",
+                "vt": "str"
+            },
+            {
                 "t": "else"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 3,
+        "outputs": 4,
         "x": 910,
         "y": 520,
         "wires": [
@@ -538,6 +576,9 @@
             ],
             [
                 "c5cd1b7d.8f5ef8"
+            ],
+            [
+                "c7c533f2.b6601"
             ],
             [
                 "ff2a38c.8366ac8"
@@ -553,7 +594,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 1090,
-        "y": 500,
+        "y": 460,
         "wires": [
             []
         ]
@@ -905,23 +946,23 @@
         "y": 180,
         "wires": [
             [
-                "f26f80bf.7566f"
+                "311f498.9af65b6"
             ]
         ]
     },
     {
         "id": "f26f80bf.7566f",
         "type": "function",
-        "z": "10cb60ee.21f7af",
+        "z": "c2d341a8.d003e",
         "name": "Get all banks",
         "func": "msg.payload = global.get('bank') || {}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 330,
-        "y": 180,
+        "x": 190,
+        "y": 80,
         "wires": [
             [
-                "39c3eaa3.ea5976"
+                "96151a5e.763098"
             ]
         ]
     },
@@ -1479,7 +1520,7 @@
         "to": "",
         "reg": false,
         "x": 470,
-        "y": 880,
+        "y": 920,
         "wires": [
             [
                 "1e316702.9ce2e9"
@@ -1522,7 +1563,9 @@
         "x": 75,
         "y": 960,
         "wires": [
-            []
+            [
+                "eea25a96.d8cab8"
+            ]
         ],
         "l": false
     },
@@ -1530,14 +1573,14 @@
         "id": "6cc36937.ed3128",
         "type": "template",
         "z": "ff75d04f.62496",
-        "name": "+10 / -2",
+        "name": "regular: +10/-2",
         "field": "payload",
         "fieldType": "msg",
         "format": "yaml",
         "syntax": "mustache",
-        "template": "---\nwin:\n    action: addCoins\n    value: 10\nlose:\n    action: removeCoins\n    value: 2",
+        "template": "---\ntitle: regular\nwin:\n    action: addCoins\n    value: 10\nlose:\n    action: removeCoins\n    value: 2",
         "output": "yaml",
-        "x": 220,
+        "x": 240,
         "y": 880,
         "wires": [
             [
@@ -1554,7 +1597,7 @@
             "a9740e20.734df"
         ],
         "x": 855,
-        "y": 880,
+        "y": 920,
         "wires": []
     },
     {
@@ -1577,7 +1620,7 @@
         "to": "",
         "reg": false,
         "x": 730,
-        "y": 880,
+        "y": 920,
         "wires": [
             [
                 "f22fcb51.115478"
@@ -1818,45 +1861,7 @@
         "y": 800,
         "wires": [
             [
-                "2da8a5c0.105a3a"
-            ]
-        ]
-    },
-    {
-        "id": "2da8a5c0.105a3a",
-        "type": "http request",
-        "z": "ff75d04f.62496",
-        "name": "",
-        "method": "GET",
-        "ret": "txt",
-        "paytoqs": false,
-        "url": "localhost:1880/api/bank",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "x": 1250,
-        "y": 800,
-        "wires": [
-            [
-                "8986a45a.7dc4d8"
-            ]
-        ]
-    },
-    {
-        "id": "8986a45a.7dc4d8",
-        "type": "json",
-        "z": "ff75d04f.62496",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 1410,
-        "y": 800,
-        "wires": [
-            [
-                "2bcd0426.1d51fc",
-                "cb4a2e0e.f6b91"
+                "6728167c.8bf548"
             ]
         ]
     },
@@ -1879,8 +1884,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1850,
-        "y": 800,
+        "x": 490,
+        "y": 1080,
         "wires": [
             [
                 "46548650.6d59e8"
@@ -1896,8 +1901,8 @@
             "e3a13a28.5e7b68",
             "a9740e20.734df"
         ],
-        "x": 1995,
-        "y": 800,
+        "x": 595,
+        "y": 1080,
         "wires": []
     },
     {
@@ -1906,8 +1911,8 @@
         "z": "ff75d04f.62496",
         "name": "Refresh bank display",
         "info": "",
-        "x": 1275,
-        "y": 760,
+        "x": 340,
+        "y": 1040,
         "wires": []
     },
     {
@@ -1922,11 +1927,11 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 1020,
-        "y": 840,
+        "x": 140,
+        "y": 1120,
         "wires": [
             [
-                "2da8a5c0.105a3a"
+                "15153f1a.5d5361"
             ]
         ]
     },
@@ -2189,7 +2194,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 1100,
-        "y": 540,
+        "y": 500,
         "wires": [
             []
         ]
@@ -2210,7 +2215,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1070,
-        "y": 600,
+        "y": 580,
         "wires": [
             [
                 "1d3dadb0.59f042"
@@ -2228,52 +2233,7 @@
         "tostatus": false,
         "complete": "false",
         "x": 1230,
-        "y": 600,
-        "wires": []
-    },
-    {
-        "id": "2bcd0426.1d51fc",
-        "type": "function",
-        "z": "ff75d04f.62496",
-        "name": "Replace userId with username",
-        "func": "const pl = {}\n\nconst users = global.get('users') || {}\n\nfor (let [userId, value] of Object.entries(msg.payload)) {\n    const user = users[userId]\n    let username = userId\n    if (user) {\n        username = user.username || userId\n    }\n    \n    pl[username] = value\n}\n\nmsg.payload = pl\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1690,
-        "y": 840,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "cb4a2e0e.f6b91",
-        "type": "function",
-        "z": "ff75d04f.62496",
-        "name": "Add username",
-        "func": "const pl = {}\n\nconst users = global.get('users') || {}\n\nfor (let [userId, value] of Object.entries(msg.payload)) {\n    const user = users[userId]\n    let username = userId\n    if (user) {\n        username = user.username || userId\n    }\n    \n    console.log(user)\n    \n    pl[userId] = {\n        username: username,\n        ...value\n    }\n}\n\nmsg.payload = pl\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 1640,
-        "y": 800,
-        "wires": [
-            [
-                "e80bc5d1.5923a8",
-                "37d1f368.89130c"
-            ]
-        ]
-    },
-    {
-        "id": "37d1f368.89130c",
-        "type": "debug",
-        "z": "ff75d04f.62496",
-        "name": "",
-        "active": false,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1740,
-        "y": 720,
+        "y": 580,
         "wires": []
     },
     {
@@ -2354,12 +2314,12 @@
         "id": "e229424.dd5e9c",
         "type": "template",
         "z": "ff75d04f.62496",
-        "name": "Double / half",
+        "name": "double or lose half",
         "field": "payload",
         "fieldType": "msg",
         "format": "yaml",
         "syntax": "mustache",
-        "template": "---\nwin:\n    action: multiplyCoins\n    value: 2\nlose:\n    action: divideCoins\n    value: 2",
+        "template": "---\ntitle: double or lose half\nwin:\n    action: multiplyCoins\n    value: 2\nlose:\n    action: divideCoins\n    value: 2",
         "output": "yaml",
         "x": 230,
         "y": 920,
@@ -2413,6 +2373,108 @@
         "targetType": "msg",
         "x": 1000,
         "y": 900,
+        "wires": []
+    },
+    {
+        "id": "311f498.9af65b6",
+        "type": "subflow:c2d341a8.d003e",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "env": [],
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "39c3eaa3.ea5976"
+            ]
+        ]
+    },
+    {
+        "id": "15153f1a.5d5361",
+        "type": "subflow:c2d341a8.d003e",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "env": [],
+        "x": 310,
+        "y": 1080,
+        "wires": [
+            [
+                "e80bc5d1.5923a8"
+            ]
+        ]
+    },
+    {
+        "id": "96151a5e.763098",
+        "type": "function",
+        "z": "c2d341a8.d003e",
+        "name": "Add username",
+        "func": "const pl = {}\n\nconst users = global.get('users') || {}\n\nfor (let [userId, value] of Object.entries(msg.payload)) {\n    const user = users[userId]\n    let username = userId\n    if (user) {\n        username = user.username || userId\n    }\n    \n    console.log(user)\n    \n    pl[userId] = {\n        username: username,\n        ...value\n    }\n}\n\nmsg.payload = pl\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 380,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "6728167c.8bf548",
+        "type": "link out",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "links": [
+            "ee381988.b15428"
+        ],
+        "x": 1095,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "ee381988.b15428",
+        "type": "link in",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "links": [
+            "6728167c.8bf548",
+            "c7c533f2.b6601"
+        ],
+        "x": 175,
+        "y": 1080,
+        "wires": [
+            [
+                "15153f1a.5d5361"
+            ]
+        ]
+    },
+    {
+        "id": "eea25a96.d8cab8",
+        "type": "template",
+        "z": "ff75d04f.62496",
+        "name": "no losers",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "yaml",
+        "syntax": "mustache",
+        "template": "---\ntitle: no losers\nwin:\n    action: addCoins\n    value: 50\nlose:\n    action: addCoins\n    value: 10",
+        "output": "yaml",
+        "x": 260,
+        "y": 960,
+        "wires": [
+            [
+                "7035b853.48f2b8"
+            ]
+        ]
+    },
+    {
+        "id": "c7c533f2.b6601",
+        "type": "link out",
+        "z": "5624e464.08ccfc",
+        "name": "refreshBanks",
+        "links": [
+            "ee381988.b15428"
+        ],
+        "x": 1035,
+        "y": 540,
         "wires": []
     }
 ]

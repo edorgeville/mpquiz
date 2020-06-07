@@ -23,7 +23,7 @@ var app1 = new Vue({
     scores: {},
     banks: {},
     currentModifier: { win: {}, lose: {} },
-    username: 'john doe'
+    username: ''
   },
   computed: {
     questionLabel: function () {
@@ -85,6 +85,12 @@ var app1 = new Vue({
           questionIndex: this.questionIndex,
           answer: this.answer
         }
+      })
+    },
+    refreshBanks: function (sevent) {
+      console.log('Refreshing banks')
+      this.send({
+        topic: 'refreshBanks'
       })
     }
   },
