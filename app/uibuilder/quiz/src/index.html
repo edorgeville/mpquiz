@@ -54,25 +54,39 @@
 <body>
     <div id="app" v-cloak>
         <b-container id="app_container">
-            <b-img src="./images/node-blue-192x192.png" rounded left alt="Blue Node-RED" class="mt-1 mr-2"></b-img>
-            <h1>
-                {{ userId }}
-            </h1>
+            <h1>{{ userId }}</h1>
             <h2>{{ timeMessage }}: {{ timeleft }} seconds</h2>
 
-            <b-form-group :label="`${questionLabel}`">
+            <b-form-group :label="`${questionLabel}`" class="mx-auto">
                 <b-form-radio-group
-                  id="btn-radios-1"
-                  v-model="answer"
-                  :options="prompts"
-                  buttons
-                  name="radios-btn-default"
-                  :disabled="timeleft <= 0"
+                    id="btn-radios-1"
+                    v-model="answer"
+                    :options="prompts"
+                    buttons
+                    name="radios-btn-default"
+                    :disabled="disabled"
                 ></b-form-radio-group>
-                <b-button id="btn_increment" pill variant="primary" v-on:click="sendAnswer">Send</b-button>
+                <b-button
+                    id="btn_increment"
+                    pill
+                    variant="primary"
+                    v-on:click="sendAnswer"
+                    :disabled="disabled"
+                >Send</b-button>
             </b-form-group>
 
-            <b-table striped hover :items="scoresTable"></b-table>
+            <h3>Current modifier</h3>
+            <b-row class="p-3">
+                <b-col>
+                    Win: {{ currentModifier.win }}
+                </b-col>
+                <b-col>
+                    Lose: {{ currentModifier.lose }}
+                </b-col>
+            </b-row>
+
+            <h3 class=".mt-1">Banks 👛</h3>
+            <b-table striped hover :items="banksTable"></b-table>
 
         </b-container>
     </div>

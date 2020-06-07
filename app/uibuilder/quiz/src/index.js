@@ -13,14 +13,16 @@ var app1 = new Vue({
     questionIndex: null,
     answer: 'radio1',
     prompts: [
-      // { text: 'Radio 1', value: 'radio1' },
-      // { text: 'Radio 2', value: 'radio2' },
-      // { text: 'Radio 3 (disabled)', value: 'radio3', disabled: true },
-      // { text: 'Radio 4', value: 'radio4' }
+      { text: 'Standby', value: 'Standby' },
+      { text: 'Standby', value: 'Standby' },
+      { text: 'Standby', value: 'Standby' },
+      { text: 'Standby', value: 'Standby' }
     ],
     timeMessage: 'Standby',
     timeleft: 0,
-    scores: {}
+    scores: {},
+    banks: {},
+    currentModifier: {}
   },
   computed: {
     questionLabel: function () {
@@ -51,8 +53,20 @@ var app1 = new Vue({
           user: user
         })
       }
-      Object.entries(this.scores)
       return scoresTable
+    },
+    banksTable: function () {
+      const banksTable = []
+      for (const [user, value] of Object.entries(this.banks)) {
+        banksTable.push({
+          user: user,
+          ...value
+        })
+      }
+      return banksTable
+    },
+    disabled: function () {
+      return this.timeleft <= 0
     }
   },
   methods: {
@@ -115,6 +129,12 @@ var app1 = new Vue({
       }
       if (msg.topic === 'scores') {
         vueApp.scores = msg.payload
+      }
+      if (msg.topic === 'banks') {
+        vueApp.banks = msg.payload
+      }
+      if (msg.topic === 'currentModifier') {
+        vueApp.currentModifier = msg.payload
       }
     })
 

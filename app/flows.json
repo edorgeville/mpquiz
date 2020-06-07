@@ -2,7 +2,7 @@
     {
         "id": "a4c1dacb.0aa0d8",
         "type": "tab",
-        "label": "Flow 1",
+        "label": "Init",
         "disabled": false,
         "info": ""
     },
@@ -17,6 +17,13 @@
         "id": "10cb60ee.21f7af",
         "type": "tab",
         "label": "Bank",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "ff75d04f.62496",
+        "type": "tab",
+        "label": "Main control",
         "disabled": false,
         "info": ""
     },
@@ -154,273 +161,6 @@
         ]
     },
     {
-        "id": "efd0c09f.0bc63",
-        "type": "function",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "Answers array to text/value pairs",
-        "func": "msg.payload.prompts = msg.payload.prompts.map((prompt, index) => {\n    return {\n        text: prompt,\n        // value: String.fromCharCode(index + 65) // A == 65, B == 66, etc\n        value: index\n    }\n})\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 570,
-        "y": 580,
-        "wires": [
-            [
-                "a6f69435.67b368"
-            ]
-        ]
-    },
-    {
-        "id": "a6f69435.67b368",
-        "type": "change",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "question",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 830,
-        "y": 580,
-        "wires": [
-            [
-                "48c37a9b.aee8b4",
-                "70164c8c.3ebd14"
-            ]
-        ]
-    },
-    {
-        "id": "a17655e3.5f2ab8",
-        "type": "mytimeout",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "outtopic": "",
-        "outsafe": "Go!",
-        "outwarning": "Hurry up!",
-        "outunsafe": "Time's out!",
-        "warning": "",
-        "timer": "",
-        "debug": false,
-        "ndebug": false,
-        "ignoreCase": false,
-        "repeat": false,
-        "again": false,
-        "x": 1550,
-        "y": 860,
-        "wires": [
-            [
-                "6d591598.406c5c"
-            ],
-            [
-                "6480e33c.e56f4c"
-            ]
-        ]
-    },
-    {
-        "id": "79a62274.61f66c",
-        "type": "inject",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 1180,
-        "y": 860,
-        "wires": [
-            [
-                "4d63487d.74ae38"
-            ]
-        ]
-    },
-    {
-        "id": "4d63487d.74ae38",
-        "type": "template",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "field": "payload",
-        "fieldType": "msg",
-        "format": "yaml",
-        "syntax": "mustache",
-        "template": "---\npayload: on\ntimeout: 10\nwarning: 2",
-        "output": "yaml",
-        "x": 1360,
-        "y": 860,
-        "wires": [
-            [
-                "a17655e3.5f2ab8"
-            ]
-        ]
-    },
-    {
-        "id": "6480e33c.e56f4c",
-        "type": "change",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "timeleft",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1730,
-        "y": 880,
-        "wires": [
-            [
-                "76faccd2.7c2824"
-            ]
-        ]
-    },
-    {
-        "id": "f0173be7.c781b8",
-        "type": "inject",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "topic": "",
-        "payload": "on",
-        "payloadType": "str",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 1350,
-        "y": 920,
-        "wires": [
-            [
-                "a17655e3.5f2ab8"
-            ]
-        ]
-    },
-    {
-        "id": "a3386f73.e3d0d",
-        "type": "inject",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "topic": "",
-        "payload": "off",
-        "payloadType": "str",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 1350,
-        "y": 960,
-        "wires": [
-            [
-                "a17655e3.5f2ab8"
-            ]
-        ]
-    },
-    {
-        "id": "79da9006.ba2f5",
-        "type": "inject",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "topic": "",
-        "payload": "cancel",
-        "payloadType": "str",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 1350,
-        "y": 1000,
-        "wires": [
-            [
-                "a17655e3.5f2ab8"
-            ]
-        ]
-    },
-    {
-        "id": "76faccd2.7c2824",
-        "type": "link out",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "links": [
-            "e3a13a28.5e7b68",
-            "a9740e20.734df"
-        ],
-        "x": 1855,
-        "y": 860,
-        "wires": []
-    },
-    {
-        "id": "6d591598.406c5c",
-        "type": "change",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "timeMessage",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1730,
-        "y": 840,
-        "wires": [
-            [
-                "76faccd2.7c2824"
-            ]
-        ]
-    },
-    {
-        "id": "b111ba2b.a9ab08",
-        "type": "link in",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "links": [
-            "48c37a9b.aee8b4"
-        ],
-        "x": 1235,
-        "y": 820,
-        "wires": [
-            [
-                "4d63487d.74ae38"
-            ]
-        ]
-    },
-    {
-        "id": "48c37a9b.aee8b4",
-        "type": "link out",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "links": [
-            "e3a13a28.5e7b68",
-            "b111ba2b.a9ab08",
-            "a9740e20.734df"
-        ],
-        "x": 975,
-        "y": 580,
-        "wires": []
-    },
-    {
         "id": "2c5cc44c.27401c",
         "type": "inject",
         "z": "a4c1dacb.0aa0d8",
@@ -432,8 +172,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 220,
-        "y": 1240,
+        "x": 120,
+        "y": 700,
         "wires": [
             [
                 "a8b0f11c.38663"
@@ -448,8 +188,8 @@
         "func": "const answers = msg.payload\nconst rightAnswers = msg.rightAnswers\n\nconst decoratedAnswers = {}\n\nfor (let [userId, userAnswers] of Object.entries(answers)) {\n    let decorateduserAnswers = {}\n    for (let [answerId, answer] of Object.entries(userAnswers)) {\n        decorateduserAnswers[answerId] = {\n            answer: answer,\n            rightAnswer: rightAnswers[answerId],\n            valid: rightAnswers[answerId] === answer\n        }\n    }\n    decoratedAnswers[userId] = decorateduserAnswers\n}\n\nmsg.payload = decoratedAnswers\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 760,
-        "y": 1240,
+        "x": 660,
+        "y": 700,
         "wires": [
             [
                 "2fffff5e.72445"
@@ -465,7 +205,7 @@
         "fieldType": "msg",
         "format": "yaml",
         "syntax": "mustache",
-        "template": "---\n-   question: Question?\n    prompts:\n        - Réponse A\n        - Réponse B\n        - Réponse C\n        - Réponse D\n    answer: 0\n    value: 5\n-   question: De quelle couleur était le cheval blanc d'Henri 4?\n    prompts:\n        - Bleu\n        - Blanc\n        - Rouge\n        - Vert\n    answer: 1\n    value: 10\n-   question: Combien font 2+2 ?\n    prompts:\n        - 1\n        - 12\n        - 4\n        - 3.14159265359\n    answer: 2\n    value: 50",
+        "template": "---\n-   question: La bonne réponse est la réponse A\n    prompts:\n        - Réponse A\n        - Réponse B\n        - Réponse C\n        - Réponse D\n    answer: 0\n-   question: De quelle couleur était le cheval blanc d'Henri 4?\n    prompts:\n        - Bleu\n        - Blanc\n        - Rouge\n        - Vert\n    answer: 1\n-   question: Combien font 2+2 ?\n    prompts:\n        - 1\n        - 12\n        - 4\n        - 3.14159265359\n    answer: 2\n-   question: Quelle est la racine carrée de 36 ?\n    prompts:\n      - 6\n      - 9\n      - 12\n      - 18\n    answer: 0\n-   question: Qu'est pour moi le père de mon père ?\n    prompts:\n      - Mon oncle\n      - Mon frère\n      - Mon neveu\n      - Mon grand-père\n    answer: 3\n-   question: Combien de voleurs accompagnaient Ali Baba ?\n    prompts:\n      - 12\n      - 40\n      - 1000\n      - 10000\n    answer: 1\n-   question: Lequel de ces nombres est un nombre premier ?\n    prompts:\n      - 13\n      - 25\n      - 32\n      - 33\n    answer: 0\n-   question: Combien d'années compte-t-on dans une décennie ?\n    prompts:\n      - 1\n      - 10\n      - 12\n      - 100\n    answer: 1\n-   question: Lequel de ces termes est synonyme de joyeux ?\n    prompts:\n      - Gai\n      - Bouleversé\n      - Désolé\n      - Navré\n    answer: 0\n-   question: Combien compte-t-on de jours durant le mois de juillet ?\n    prompts:\n      - 28\n      - 29\n      - 30\n      - 31\n    answer: 3\n-   question: Quel âge a un enfant de 18 mois ?\n    prompts:\n      - 1 an\n      - 1 an et demi\n      - 2 ans\n      - 3 ans\n    answer: 1\n-   question: La somme des angles d'un triangle est égale à ?\n    prompts:\n      - 90°\n      - 180°\n      - 360°\n      - 720°\n    answer: 1\n",
         "output": "yaml",
         "x": 370,
         "y": 80,
@@ -521,96 +261,6 @@
         ]
     },
     {
-        "id": "3f0c98e2.607398",
-        "type": "function",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "Get step from index",
-        "func": "const steps = global.get('quiz')\nconst step = steps.map(({answer, ...rest}) => rest) // strips answer\n\nmsg.payload = step[msg.payload]\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 290,
-        "y": 580,
-        "wires": [
-            [
-                "efd0c09f.0bc63"
-            ]
-        ]
-    },
-    {
-        "id": "16f71894.88d6d7",
-        "type": "inject",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "topic": "",
-        "payload": "0",
-        "payloadType": "num",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 100,
-        "y": 540,
-        "wires": [
-            [
-                "3f0c98e2.607398"
-            ]
-        ]
-    },
-    {
-        "id": "eb976aca.bb9a18",
-        "type": "inject",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "topic": "",
-        "payload": "1",
-        "payloadType": "num",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 100,
-        "y": 580,
-        "wires": [
-            [
-                "3f0c98e2.607398"
-            ]
-        ]
-    },
-    {
-        "id": "e2c28816.4d9048",
-        "type": "inject",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "topic": "",
-        "payload": "2",
-        "payloadType": "num",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 100,
-        "y": 620,
-        "wires": [
-            [
-                "3f0c98e2.607398"
-            ]
-        ]
-    },
-    {
-        "id": "70164c8c.3ebd14",
-        "type": "debug",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 990,
-        "y": 620,
-        "wires": []
-    },
-    {
         "id": "a8b0f11c.38663",
         "type": "change",
         "z": "a4c1dacb.0aa0d8",
@@ -629,8 +279,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 480,
-        "y": 1240,
+        "x": 380,
+        "y": 700,
         "wires": [
             [
                 "b68d620a.79929"
@@ -661,8 +311,8 @@
         "func": "\nconst pl = {}\n\n\nfor (const userId in msg.payload) {\n    const user = msg.payload[userId]\n    let score = 0\n    Object.entries(user).forEach(([index, step]) => {\n        if (step.valid) {\n            score++\n        }\n    })\n    pl[userId] = {score: score, answers: user}\n}\nmsg.payload = pl\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 1000,
-        "y": 1240,
+        "x": 900,
+        "y": 700,
         "wires": [
             [
                 "57c78a42.196994",
@@ -680,8 +330,8 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 1190,
-        "y": 1240,
+        "x": 1110,
+        "y": 640,
         "wires": []
     },
     {
@@ -703,8 +353,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1170,
-        "y": 1300,
+        "x": 1090,
+        "y": 700,
         "wires": [
             [
                 "79e05a9e.9aa7f4"
@@ -720,8 +370,8 @@
             "e3a13a28.5e7b68",
             "a9740e20.734df"
         ],
-        "x": 1300,
-        "y": 1300,
+        "x": 1220,
+        "y": 700,
         "wires": []
     },
     {
@@ -847,11 +497,17 @@
         "id": "a9740e20.734df",
         "type": "link in",
         "z": "5624e464.08ccfc",
-        "name": "",
+        "name": "Global send",
         "links": [
-            "76faccd2.7c2824",
+            "37acf73f.ba9458",
             "48c37a9b.aee8b4",
-            "79e05a9e.9aa7f4"
+            "76faccd2.7c2824",
+            "79e05a9e.9aa7f4",
+            "d623a427.9e7bd8",
+            "9ad594da.369708",
+            "f22fcb51.115478",
+            "5cc7db3d.8989b4",
+            "46548650.6d59e8"
         ],
         "x": 580,
         "y": 260,
@@ -1010,8 +666,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 460,
-        "y": 160,
+        "x": 120,
+        "y": 100,
         "wires": [
             [
                 "e2ed4508.7804c8"
@@ -1037,34 +693,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 660,
-        "y": 160,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "8994828b.567b5",
-        "type": "link out",
-        "z": "10cb60ee.21f7af",
-        "name": "",
-        "links": [
-            "799d8292.dbea0c"
-        ],
-        "x": 455,
-        "y": 540,
-        "wires": []
-    },
-    {
-        "id": "799d8292.dbea0c",
-        "type": "link in",
-        "z": "10cb60ee.21f7af",
-        "name": "",
-        "links": [
-            "8994828b.567b5"
-        ],
-        "x": 215,
-        "y": 280,
+        "x": 320,
+        "y": 100,
         "wires": [
             []
         ]
@@ -1074,6 +704,822 @@
         "type": "inject",
         "z": "10cb60ee.21f7af",
         "name": "",
+        "topic": "addCoins",
+        "payload": "10",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 270,
+        "y": 660,
+        "wires": [
+            [
+                "e64a5635.642638"
+            ]
+        ]
+    },
+    {
+        "id": "e64a5635.642638",
+        "type": "change",
+        "z": "10cb60ee.21f7af",
+        "name": "YR7E",
+        "rules": [
+            {
+                "t": "set",
+                "p": "userId",
+                "pt": "msg",
+                "to": "YR7E",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 660,
+        "wires": [
+            [
+                "f011c1f2.734d7"
+            ]
+        ]
+    },
+    {
+        "id": "8203c457.b91068",
+        "type": "inject",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "topic": "addCoins",
+        "payload": "-10",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 270,
+        "y": 700,
+        "wires": [
+            [
+                "e64a5635.642638"
+            ]
+        ]
+    },
+    {
+        "id": "c3055706.2d58d8",
+        "type": "inject",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "topic": "addStars",
+        "payload": "1",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 280,
+        "y": 740,
+        "wires": [
+            [
+                "e64a5635.642638"
+            ]
+        ]
+    },
+    {
+        "id": "32f052ca.1b727e",
+        "type": "inject",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "topic": "addStars",
+        "payload": "-1",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 270,
+        "y": 780,
+        "wires": [
+            [
+                "e64a5635.642638"
+            ]
+        ]
+    },
+    {
+        "id": "99304e28.d50fa",
+        "type": "function",
+        "z": "10cb60ee.21f7af",
+        "name": "Get userbank",
+        "func": "const bank = global.get('bank') || {}\nconst userBank = bank[msg.payload.userId] || {coins: 0, stars: 0}\nmsg.userBank = userBank\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 360,
+        "y": 340,
+        "wires": [
+            [
+                "1e00c0be.b6f44f"
+            ]
+        ]
+    },
+    {
+        "id": "1e00c0be.b6f44f",
+        "type": "switch",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "property": "payload.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "addCoins",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "removeCoins",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "multiplyCoins",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "addStars",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "removeStars",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 5,
+        "x": 540,
+        "y": 340,
+        "wires": [
+            [
+                "f393074b.5b6e28"
+            ],
+            [
+                "10c0a03e.ebdc5"
+            ],
+            [
+                "1ea10e1b.3496d2"
+            ],
+            [
+                "7cf93f67.c8df8"
+            ],
+            [
+                "133890ea.e6691f"
+            ]
+        ]
+    },
+    {
+        "id": "f393074b.5b6e28",
+        "type": "function",
+        "z": "10cb60ee.21f7af",
+        "name": "addCoins",
+        "func": "msg.userBank.coins += msg.payload.value\nif (msg.userBank.coins < 0) {\n    msg.userBank.coins = 0\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 700,
+        "y": 260,
+        "wires": [
+            [
+                "8f0b0f9e.a477f"
+            ]
+        ]
+    },
+    {
+        "id": "7cf93f67.c8df8",
+        "type": "function",
+        "z": "10cb60ee.21f7af",
+        "name": "addStars",
+        "func": "msg.userBank.stars += msg.payload.value\nif (msg.userBank.stars < 0) {\n    msg.userBank.stars = 0\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 700,
+        "y": 380,
+        "wires": [
+            [
+                "8f0b0f9e.a477f"
+            ]
+        ]
+    },
+    {
+        "id": "8f0b0f9e.a477f",
+        "type": "function",
+        "z": "10cb60ee.21f7af",
+        "name": "Set userBank",
+        "func": "const bank = global.get('bank') || {}\nbank[msg.payload.userId] = msg.userBank\nglobal.set('bank', bank)\nmsg.payload = msg.userBank\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 920,
+        "y": 340,
+        "wires": [
+            [
+                "f509c2d9.8dfef"
+            ]
+        ]
+    },
+    {
+        "id": "c82022a.f52a3e",
+        "type": "http in",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "url": "/api/bank",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 120,
+        "y": 340,
+        "wires": [
+            [
+                "99304e28.d50fa"
+            ]
+        ]
+    },
+    {
+        "id": "f011c1f2.734d7",
+        "type": "template",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "---\nuserId: {{ userId }}\naction: {{ topic }}\nvalue: {{ payload }}",
+        "output": "yaml",
+        "x": 620,
+        "y": 660,
+        "wires": [
+            [
+                "6d4b40a.958a5c"
+            ]
+        ]
+    },
+    {
+        "id": "6d4b40a.958a5c",
+        "type": "http request",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "localhost:1880/api/bank",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 780,
+        "y": 660,
+        "wires": [
+            [
+                "3ba979af.a21be6"
+            ]
+        ]
+    },
+    {
+        "id": "42913d03.d146f4",
+        "type": "http response",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1330,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "74fdc550.132b2c",
+        "type": "debug",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1090,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "3ba979af.a21be6",
+        "type": "json",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 930,
+        "y": 660,
+        "wires": [
+            [
+                "74fdc550.132b2c"
+            ]
+        ]
+    },
+    {
+        "id": "f509c2d9.8dfef",
+        "type": "change",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "statusCode",
+                "pt": "msg",
+                "to": "200",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1140,
+        "y": 340,
+        "wires": [
+            [
+                "42913d03.d146f4"
+            ]
+        ]
+    },
+    {
+        "id": "ce55b3a2.60016",
+        "type": "http in",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "url": "/api/bank",
+        "method": "get",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 180,
+        "wires": [
+            [
+                "f26f80bf.7566f"
+            ]
+        ]
+    },
+    {
+        "id": "f26f80bf.7566f",
+        "type": "function",
+        "z": "10cb60ee.21f7af",
+        "name": "Get all banks",
+        "func": "msg.payload = global.get('bank') || {}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 330,
+        "y": 180,
+        "wires": [
+            [
+                "39c3eaa3.ea5976"
+            ]
+        ]
+    },
+    {
+        "id": "39c3eaa3.ea5976",
+        "type": "change",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "statusCode",
+                "pt": "msg",
+                "to": "200",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 180,
+        "wires": [
+            [
+                "684d36af.295038"
+            ]
+        ]
+    },
+    {
+        "id": "684d36af.295038",
+        "type": "http response",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 770,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "7fe89186.b2461",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "payload": "answers",
+        "payloadType": "global",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 80,
+        "y": 940,
+        "wires": [
+            [
+                "1f16502.fa86cb"
+            ]
+        ]
+    },
+    {
+        "id": "fee78827.6a50a8",
+        "type": "function",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "Decorate answers with valid",
+        "func": "const answers = msg.payload\nconst rightAnswers = msg.rightAnswers\n\nconst decoratedAnswers = {}\n\nfor (let [userId, userAnswers] of Object.entries(answers)) {\n    let decorateduserAnswers = {}\n    for (let [answerId, answer] of Object.entries(userAnswers)) {\n        decorateduserAnswers[answerId] = {\n            answer: answer,\n            rightAnswer: rightAnswers[answerId],\n            valid: rightAnswers[answerId] === answer\n        }\n    }\n    decoratedAnswers[userId] = decorateduserAnswers\n}\n\nmsg.payload = decoratedAnswers\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 620,
+        "y": 940,
+        "wires": [
+            [
+                "4dd0f566.3efe9c"
+            ]
+        ]
+    },
+    {
+        "id": "1f16502.fa86cb",
+        "type": "change",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "rightAnswers",
+                "pt": "msg",
+                "to": "$globalContext('quiz').answer\t",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 340,
+        "y": 940,
+        "wires": [
+            [
+                "fee78827.6a50a8"
+            ]
+        ]
+    },
+    {
+        "id": "4dd0f566.3efe9c",
+        "type": "debug",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 870,
+        "y": 940,
+        "wires": []
+    },
+    {
+        "id": "21e7d574.d02b7a",
+        "type": "function",
+        "z": "ff75d04f.62496",
+        "name": "Get step from index",
+        "func": "const steps = global.get('quiz')\nconst step = steps.map(({answer, ...rest}) => rest) // strips answer\n\nmsg.payload = step[msg.payload]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 140,
+        "wires": [
+            [
+                "ae7ec69.7185738"
+            ]
+        ]
+    },
+    {
+        "id": "ae7ec69.7185738",
+        "type": "function",
+        "z": "ff75d04f.62496",
+        "name": "Answers array to text/value pairs",
+        "func": "msg.payload.prompts = msg.payload.prompts.map((prompt, index) => {\n    return {\n        text: prompt,\n        // value: String.fromCharCode(index + 65) // A == 65, B == 66, etc\n        value: index\n    }\n})\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 650,
+        "y": 140,
+        "wires": [
+            [
+                "e8db948e.9ede58"
+            ]
+        ]
+    },
+    {
+        "id": "b728841.d9d7278",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "21e7d574.d02b7a"
+            ]
+        ]
+    },
+    {
+        "id": "dfe95fbd.188d5",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 140,
+        "wires": [
+            [
+                "21e7d574.d02b7a"
+            ]
+        ]
+    },
+    {
+        "id": "e998287a.1d93c8",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "2",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 180,
+        "wires": [
+            [
+                "21e7d574.d02b7a"
+            ]
+        ]
+    },
+    {
+        "id": "638b661.8d7c898",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "3",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 220,
+        "wires": [
+            [
+                "21e7d574.d02b7a"
+            ]
+        ]
+    },
+    {
+        "id": "ad950284.be419",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "4",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 260,
+        "wires": [
+            [
+                "21e7d574.d02b7a"
+            ]
+        ]
+    },
+    {
+        "id": "d734f6f9.5afac8",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "5",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 300,
+        "wires": [
+            [
+                "21e7d574.d02b7a"
+            ]
+        ]
+    },
+    {
+        "id": "c0aeed74.5d99e",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "6",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 340,
+        "wires": [
+            [
+                "21e7d574.d02b7a"
+            ]
+        ]
+    },
+    {
+        "id": "3f386252.05abde",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "7",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 380,
+        "wires": [
+            [
+                "21e7d574.d02b7a"
+            ]
+        ]
+    },
+    {
+        "id": "b17ed29e.1ec62",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "8",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 420,
+        "wires": [
+            [
+                "21e7d574.d02b7a"
+            ]
+        ]
+    },
+    {
+        "id": "1ee6cd22.218ef3",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "9",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 460,
+        "wires": [
+            [
+                "21e7d574.d02b7a"
+            ]
+        ]
+    },
+    {
+        "id": "e8db948e.9ede58",
+        "type": "change",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "question",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 910,
+        "y": 140,
+        "wires": [
+            [
+                "9ad594da.369708",
+                "e907cfa.2dfa93",
+                "86bc5e26.6d3be"
+            ]
+        ]
+    },
+    {
+        "id": "9ad594da.369708",
+        "type": "link out",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "links": [
+            "e3a13a28.5e7b68",
+            "b111ba2b.a9ab08",
+            "a9740e20.734df",
+            "7fd316f4.49bc08"
+        ],
+        "x": 1055,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "e907cfa.2dfa93",
+        "type": "debug",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1070,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "86bc5e26.6d3be",
+        "type": "change",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "currentIndex",
+                "pt": "global",
+                "to": "payload.index",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1120,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2f3d9f92.b0772",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
         "topic": "",
         "payload": "",
         "payloadType": "date",
@@ -1081,11 +1527,787 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 260,
-        "y": 540,
+        "x": 140,
+        "y": 620,
         "wires": [
             [
-                "8994828b.567b5"
+                "48e8bd6.9f96044"
+            ]
+        ]
+    },
+    {
+        "id": "48e8bd6.9f96044",
+        "type": "change",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "answers",
+                "pt": "msg",
+                "to": "answers",
+                "tot": "global"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 620,
+        "wires": [
+            [
+                "d494bffe.7ae8"
+            ]
+        ]
+    },
+    {
+        "id": "d494bffe.7ae8",
+        "type": "change",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "rightAnswers",
+                "pt": "msg",
+                "to": "$globalContext('quiz').answer\t",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 580,
+        "y": 620,
+        "wires": [
+            [
+                "4fc76340.6ab6ec"
+            ]
+        ]
+    },
+    {
+        "id": "4fc76340.6ab6ec",
+        "type": "function",
+        "z": "ff75d04f.62496",
+        "name": "Decorate answers with valid",
+        "func": "const answers = msg.answers\nconst rightAnswers = msg.rightAnswers\n\nconst decoratedAnswers = {}\n\nfor (let [userId, userAnswers] of Object.entries(answers)) {\n    let decorateduserAnswers = {}\n    for (let [answerId, answer] of Object.entries(userAnswers)) {\n        decorateduserAnswers[answerId] = {\n            answer: answer,\n            rightAnswer: rightAnswers[answerId],\n            valid: rightAnswers[answerId] === answer\n        }\n    }\n    decoratedAnswers[userId] = decorateduserAnswers\n}\n\nmsg.payload = decoratedAnswers\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 840,
+        "y": 620,
+        "wires": [
+            [
+                "cba422a2.23c39"
+            ]
+        ]
+    },
+    {
+        "id": "cba422a2.23c39",
+        "type": "function",
+        "z": "ff75d04f.62496",
+        "name": "Get currentAnswer valid status",
+        "func": "const decoratedAnswers = msg.payload\nconst currentIndex = global.get('currentIndex', 0)\n\nconst pl = {}\n\nfor (let userId of Object.keys(decoratedAnswers)){\n    const userDecoratedAnswers = decoratedAnswers[userId]\n    pl[userId] = (userDecoratedAnswers[currentIndex] || {valid:false}).valid\n}\n\nmsg.payload = pl\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1130,
+        "y": 620,
+        "wires": [
+            [
+                "fc6c2317.5c3ff"
+            ]
+        ]
+    },
+    {
+        "id": "fc6c2317.5c3ff",
+        "type": "split",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": false,
+        "addname": "topic",
+        "x": 1350,
+        "y": 620,
+        "wires": [
+            [
+                "96e2f23a.f1446"
+            ]
+        ]
+    },
+    {
+        "id": "a24ec5c4.eb0668",
+        "type": "function",
+        "z": "ff75d04f.62496",
+        "name": "Apply modifier",
+        "func": "const currentModifier = global.get('currentModifier')\nif(msg.payload) {\n    msg.payload = currentModifier.win\n} else {\n    msg.payload = currentModifier.lose\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 295,
+        "y": 800,
+        "wires": [
+            [
+                "fb9a574b.75a2e8"
+            ]
+        ]
+    },
+    {
+        "id": "fb9a574b.75a2e8",
+        "type": "change",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "rules": [
+            {
+                "t": "move",
+                "p": "topic",
+                "pt": "msg",
+                "to": "payload.userId",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 515,
+        "y": 800,
+        "wires": [
+            [
+                "74a9565b.8726a8"
+            ]
+        ]
+    },
+    {
+        "id": "74a9565b.8726a8",
+        "type": "http request",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "localhost:1880/api/bank",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 685,
+        "y": 800,
+        "wires": [
+            [
+                "5015bfbe.fddc9"
+            ]
+        ]
+    },
+    {
+        "id": "5015bfbe.fddc9",
+        "type": "json",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 850,
+        "y": 800,
+        "wires": [
+            [
+                "75eba718.8632b8"
+            ]
+        ]
+    },
+    {
+        "id": "55f90bea.ed7514",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 75,
+        "y": 880,
+        "wires": [
+            [
+                "6cc36937.ed3128"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "7035b853.48f2b8",
+        "type": "change",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "currentModifier",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 470,
+        "y": 880,
+        "wires": [
+            [
+                "1e316702.9ce2e9"
+            ]
+        ]
+    },
+    {
+        "id": "c102a5c9.db0668",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 75,
+        "y": 920,
+        "wires": [
+            []
+        ],
+        "l": false
+    },
+    {
+        "id": "366d4d0f.7da322",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 75,
+        "y": 960,
+        "wires": [
+            []
+        ],
+        "l": false
+    },
+    {
+        "id": "6cc36937.ed3128",
+        "type": "template",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "yaml",
+        "syntax": "mustache",
+        "template": "---\nwin:\n    action: addCoins\n    value: 10\nlose:\n    action: removeCoins\n    value: 10",
+        "output": "yaml",
+        "x": 220,
+        "y": 880,
+        "wires": [
+            [
+                "7035b853.48f2b8"
+            ]
+        ]
+    },
+    {
+        "id": "f22fcb51.115478",
+        "type": "link out",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "links": [
+            "a9740e20.734df"
+        ],
+        "x": 855,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "1e316702.9ce2e9",
+        "type": "change",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "currentModifier",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 730,
+        "y": 880,
+        "wires": [
+            [
+                "f22fcb51.115478"
+            ]
+        ]
+    },
+    {
+        "id": "a5bba6c.3657358",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 420,
+        "y": 280,
+        "wires": [
+            [
+                "bad6c68.c215438"
+            ]
+        ]
+    },
+    {
+        "id": "bad6c68.c215438",
+        "type": "template",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "yaml",
+        "syntax": "mustache",
+        "template": "---\npayload: on\ntimeout: 10\nwarning: 2",
+        "output": "yaml",
+        "x": 600,
+        "y": 280,
+        "wires": [
+            [
+                "d9abe19.cb3712"
+            ]
+        ]
+    },
+    {
+        "id": "d9abe19.cb3712",
+        "type": "mytimeout",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "outtopic": "",
+        "outsafe": "Go!",
+        "outwarning": "Hurry up!",
+        "outunsafe": "Time's out!",
+        "warning": "",
+        "timer": "",
+        "debug": false,
+        "ndebug": false,
+        "ignoreCase": false,
+        "repeat": false,
+        "again": false,
+        "x": 790,
+        "y": 280,
+        "wires": [
+            [
+                "4c0e687d.43e4e8"
+            ],
+            [
+                "4fdd48f8.b081c8"
+            ]
+        ]
+    },
+    {
+        "id": "7fd316f4.49bc08",
+        "type": "link in",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "links": [
+            "48c37a9b.aee8b4",
+            "9ad594da.369708"
+        ],
+        "x": 475,
+        "y": 240,
+        "wires": [
+            [
+                "bad6c68.c215438"
+            ]
+        ]
+    },
+    {
+        "id": "4c0e687d.43e4e8",
+        "type": "change",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "timeMessage",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 970,
+        "y": 260,
+        "wires": [
+            [
+                "5cc7db3d.8989b4"
+            ]
+        ]
+    },
+    {
+        "id": "4fdd48f8.b081c8",
+        "type": "change",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "timeleft",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 970,
+        "y": 300,
+        "wires": [
+            [
+                "5cc7db3d.8989b4"
+            ]
+        ]
+    },
+    {
+        "id": "fd0541fd.afbbc",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "on",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 590,
+        "y": 340,
+        "wires": [
+            [
+                "d9abe19.cb3712"
+            ]
+        ]
+    },
+    {
+        "id": "da05a2d1.e1df6",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "off",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 590,
+        "y": 380,
+        "wires": [
+            [
+                "d9abe19.cb3712"
+            ]
+        ]
+    },
+    {
+        "id": "18b13080.4ad09",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "cancel",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 590,
+        "y": 420,
+        "wires": [
+            [
+                "d9abe19.cb3712"
+            ]
+        ]
+    },
+    {
+        "id": "5cc7db3d.8989b4",
+        "type": "link out",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "links": [
+            "e3a13a28.5e7b68",
+            "a9740e20.734df"
+        ],
+        "x": 1095,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "75eba718.8632b8",
+        "type": "join",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "mode": "auto",
+        "build": "string",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": "false",
+        "timeout": "",
+        "count": "",
+        "reduceRight": false,
+        "x": 1010,
+        "y": 800,
+        "wires": [
+            [
+                "2da8a5c0.105a3a"
+            ]
+        ]
+    },
+    {
+        "id": "2da8a5c0.105a3a",
+        "type": "http request",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "localhost:1880/api/bank",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 1250,
+        "y": 800,
+        "wires": [
+            [
+                "8986a45a.7dc4d8"
+            ]
+        ]
+    },
+    {
+        "id": "8986a45a.7dc4d8",
+        "type": "json",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 1410,
+        "y": 800,
+        "wires": [
+            [
+                "e80bc5d1.5923a8"
+            ]
+        ]
+    },
+    {
+        "id": "e80bc5d1.5923a8",
+        "type": "change",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "banks",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1590,
+        "y": 800,
+        "wires": [
+            [
+                "46548650.6d59e8"
+            ]
+        ]
+    },
+    {
+        "id": "46548650.6d59e8",
+        "type": "link out",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "links": [
+            "e3a13a28.5e7b68",
+            "a9740e20.734df"
+        ],
+        "x": 1715,
+        "y": 800,
+        "wires": []
+    },
+    {
+        "id": "c65d2cd0.3e13b",
+        "type": "comment",
+        "z": "ff75d04f.62496",
+        "name": "Refresh bank display",
+        "info": "",
+        "x": 1275,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "49b8374c.5af4b8",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 1020,
+        "y": 840,
+        "wires": [
+            [
+                "2da8a5c0.105a3a"
+            ]
+        ]
+    },
+    {
+        "id": "22f60cc0.b14bf4",
+        "type": "comment",
+        "z": "ff75d04f.62496",
+        "name": "Validate step",
+        "info": "",
+        "x": 130,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "96e2f23a.f1446",
+        "type": "link out",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "links": [
+            "cd9aa51b.94fc78"
+        ],
+        "x": 1455,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "cd9aa51b.94fc78",
+        "type": "link in",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "links": [
+            "96e2f23a.f1446"
+        ],
+        "x": 75,
+        "y": 800,
+        "wires": [
+            [
+                "a24ec5c4.eb0668"
+            ]
+        ]
+    },
+    {
+        "id": "d6802fa2.22bd",
+        "type": "comment",
+        "z": "ff75d04f.62496",
+        "name": "Apply to each player",
+        "info": "",
+        "x": 150,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "6a8860a0.fba97",
+        "type": "comment",
+        "z": "ff75d04f.62496",
+        "name": "All banks updated",
+        "info": "",
+        "x": 1050,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "10c0a03e.ebdc5",
+        "type": "function",
+        "z": "10cb60ee.21f7af",
+        "name": "removeCoins",
+        "func": "msg.userBank.coins -= msg.payload.value\nif (msg.userBank.coins < 0) {\n    msg.userBank.coins = 0\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 710,
+        "y": 300,
+        "wires": [
+            [
+                "8f0b0f9e.a477f"
+            ]
+        ]
+    },
+    {
+        "id": "133890ea.e6691f",
+        "type": "function",
+        "z": "10cb60ee.21f7af",
+        "name": "addStars",
+        "func": "msg.userBank.stars += msg.payload.value\nif (msg.userBank.stars < 0) {\n    msg.userBank.stars = 0\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 700,
+        "y": 420,
+        "wires": [
+            [
+                "8f0b0f9e.a477f"
+            ]
+        ]
+    },
+    {
+        "id": "1ea10e1b.3496d2",
+        "type": "function",
+        "z": "10cb60ee.21f7af",
+        "name": "multiplyCoins",
+        "func": "msg.userBank.coins = msg.userBank.coins * msg.payload.value\nif (msg.userBank.coins < 0) {\n    msg.userBank.coins = 0\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 710,
+        "y": 340,
+        "wires": [
+            [
+                "8f0b0f9e.a477f"
             ]
         ]
     }
