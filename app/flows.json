@@ -72,14 +72,17 @@
                 "wires": [
                     {
                         "id": "99304e28.d50fa"
+                    },
+                    {
+                        "id": "4a88c712.e56df8"
                     }
                 ]
             }
         ],
         "out": [
             {
-                "x": 1100,
-                "y": 160,
+                "x": 1200,
+                "y": 140,
                 "wires": [
                     {
                         "id": "8f0b0f9e.a477f",
@@ -88,8 +91,8 @@
                 ]
             },
             {
-                "x": 920,
-                "y": 360,
+                "x": 1020,
+                "y": 340,
                 "wires": [
                     {
                         "id": "7eeb11d7.eb737",
@@ -106,8 +109,8 @@
         "color": "#C7E9C0",
         "icon": "font-awesome/fa-dollar",
         "status": {
-            "x": 1100,
-            "y": 200,
+            "x": 1200,
+            "y": 180,
             "wires": [
                 {
                     "id": "7eeb11d7.eb737",
@@ -811,12 +814,22 @@
                 "vt": "str"
             },
             {
+                "t": "eq",
+                "v": "addStars",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "removeStars",
+                "vt": "str"
+            },
+            {
                 "t": "else"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 6,
+        "outputs": 8,
         "x": 380,
         "y": 160,
         "wires": [
@@ -836,6 +849,12 @@
                 "7cf93f67.c8df8"
             ],
             [
+                "49e35482.d7dc9c"
+            ],
+            [
+                "18b81df2.647bd2"
+            ],
+            [
                 "163c8ace.5677b5"
             ]
         ]
@@ -848,8 +867,8 @@
         "func": "msg.userBank.coins += msg.payload.value\nif (msg.userBank.coins < 0) {\n    msg.userBank.coins = 0\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 540,
-        "y": 80,
+        "x": 640,
+        "y": 60,
         "wires": [
             [
                 "8f0b0f9e.a477f"
@@ -864,8 +883,8 @@
         "func": "\nconst starValue = 100\n\nconst userCoins = msg.userBank.coins\n\nconst desiredStars = msg.payload.value\n\nconst desiredValue = starValue * desiredStars\n\nif (desiredValue > userCoins) {\n    // too poor\n    return msg;\n}\n\nmsg.userBank.coins -= desiredValue\nmsg.userBank.stars += desiredStars\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 540,
-        "y": 240,
+        "x": 640,
+        "y": 220,
         "wires": [
             [
                 "8f0b0f9e.a477f"
@@ -880,8 +899,8 @@
         "func": "const bank = global.get('bank') || {}\nbank[msg.payload.userId] = msg.userBank\nglobal.set('bank', bank)\n// msg.payload = msg.userBank\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 760,
-        "y": 160,
+        "x": 860,
+        "y": 140,
         "wires": [
             [
                 "41008de.68b8e74"
@@ -1494,7 +1513,7 @@
         "once": false,
         "onceDelay": 0.1,
         "x": 75,
-        "y": 960,
+        "y": 1040,
         "wires": [
             [
                 "eea25a96.d8cab8"
@@ -1864,8 +1883,8 @@
         "func": "msg.userBank.coins -= msg.payload.value\nif (msg.userBank.coins < 0) {\n    msg.userBank.coins = 0\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 550,
-        "y": 120,
+        "x": 650,
+        "y": 100,
         "wires": [
             [
                 "8f0b0f9e.a477f"
@@ -1880,8 +1899,8 @@
         "func": "msg.userBank.coins = msg.userBank.coins * msg.payload.value\nif (msg.userBank.coins < 0) {\n    msg.userBank.coins = 0\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 550,
-        "y": 160,
+        "x": 650,
+        "y": 140,
         "wires": [
             [
                 "8f0b0f9e.a477f"
@@ -2108,7 +2127,8 @@
         "y": 800,
         "wires": [
             [
-                "d33f063c.ae41e8"
+                "d33f063c.ae41e8",
+                "8b0738be.116768"
             ]
         ]
     },
@@ -2136,8 +2156,8 @@
         "name": "",
         "scope": null,
         "uncaught": false,
-        "x": 680,
-        "y": 360,
+        "x": 780,
+        "y": 340,
         "wires": [
             []
         ]
@@ -2153,8 +2173,8 @@
         "syntax": "mustache",
         "template": "{{payload.userId}}: {{userBank.stars}}⭐,{{userBank.coins}}💲",
         "output": "str",
-        "x": 950,
-        "y": 200,
+        "x": 1050,
+        "y": 180,
         "wires": [
             []
         ]
@@ -2186,8 +2206,8 @@
         "func": "msg.userBank.coins = parseInt(msg.userBank.coins / msg.payload.value)\nif (msg.userBank.coins < 0) {\n    msg.userBank.coins = 0\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 550,
-        "y": 200,
+        "x": 650,
+        "y": 180,
         "wires": [
             [
                 "8f0b0f9e.a477f"
@@ -2265,7 +2285,7 @@
         "template": "---\ntitle: no losers\nwin:\n    action: addCoins\n    value: 50\nlose:\n    action: addCoins\n    value: 10",
         "output": "yaml",
         "x": 260,
-        "y": 960,
+        "y": 1040,
         "wires": [
             [
                 "7035b853.48f2b8"
@@ -2373,8 +2393,8 @@
         "syntax": "mustache",
         "template": "Unsupported method: `{{payload}}`",
         "output": "str",
-        "x": 670,
-        "y": 400,
+        "x": 650,
+        "y": 420,
         "wires": [
             []
         ]
@@ -2587,5 +2607,105 @@
             [],
             []
         ]
+    },
+    {
+        "id": "a65c3dac.0470e",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 75,
+        "y": 960,
+        "wires": [
+            [
+                "57754ea7.3145e"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "57754ea7.3145e",
+        "type": "template",
+        "z": "ff75d04f.62496",
+        "name": "win or lose a star 😱",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "yaml",
+        "syntax": "mustache",
+        "template": "---\ntitle: win or lose a star 😱\nwin:\n    action: addStars\n    value: 1\nlose:\n    action: removeStars\n    value: 1",
+        "output": "yaml",
+        "x": 240,
+        "y": 960,
+        "wires": [
+            [
+                "7035b853.48f2b8"
+            ]
+        ]
+    },
+    {
+        "id": "49e35482.d7dc9c",
+        "type": "function",
+        "z": "47d73e76.0a224",
+        "name": "addStars",
+        "func": "msg.userBank.stars += msg.payload.value\nif (msg.userBank.stars < 0) {\n    msg.userBank.stars = 0\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 640,
+        "y": 260,
+        "wires": [
+            [
+                "8f0b0f9e.a477f"
+            ]
+        ]
+    },
+    {
+        "id": "18b81df2.647bd2",
+        "type": "function",
+        "z": "47d73e76.0a224",
+        "name": "removeStars",
+        "func": "msg.userBank.stars -= msg.payload.value\nif (msg.userBank.stars < 0) {\n    msg.userBank.stars = 0\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 650,
+        "y": 300,
+        "wires": [
+            [
+                "8f0b0f9e.a477f"
+            ]
+        ]
+    },
+    {
+        "id": "8b0738be.116768",
+        "type": "debug",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 700,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "4a88c712.e56df8",
+        "type": "debug",
+        "z": "47d73e76.0a224",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 170,
+        "y": 220,
+        "wires": []
     }
 ]

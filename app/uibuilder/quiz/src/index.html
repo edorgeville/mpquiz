@@ -55,6 +55,7 @@
     <div id="app" v-cloak>
         <b-container id="app_container">
             <h1><img src="../uibuilder/common/images/logo.png"></h1>
+            <h2>{{ myScore }}</h2>
             <b-form-input v-model="username" placeholder="Enter your name"></b-form-input>
             <h2>{{ timeMessage }}: {{ timeleft }} seconds</h2>
 
@@ -73,7 +74,7 @@
                     variant="primary"
                     v-on:click="sendAnswer"
                     :disabled="disabled"
-                >Send</b-button>
+                >{{ sendButtonText }}</b-button>
             </b-form-group>
 
             <h3>Current modifier: {{ currentModifier.title }}</h3>
@@ -96,7 +97,7 @@
 
             <b-row>
                 <b-col>
-                    <b-button variant="success" v-on:click="buyStar">Buy star ⭐</b-button>
+                    <b-button variant="success" v-on:click="buyStar" :disabled="!canBuyStar">Buy star ⭐</b-button>
                 </b-col>
                 <b-col>
                     <b-button variant="primary" v-on:click="refreshBanks">Refresh banks 🔃</b-button>

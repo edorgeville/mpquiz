@@ -31,9 +31,25 @@ var app1 = new Vue({
     sortBy: 'stars',
     sortDesc: true,
     currentModifier: { win: {}, lose: {} },
-    username: ''
+    username: '',
+    sent: false
   },
   computed: {
+    canBuyStar: function () {
+      return this.myCoins >= 100
+    },
+    myBank: function () {
+      return this.banks[this.userId] || {}
+    },
+    myCoins: function () {
+      return this.myBank.coins || 0
+    },
+    myStars: function () {
+      return this.myBank.stars || 0
+    },
+    myScore: function () {
+      return `💲 ${this.myCoins} ⭐ ${this.myStars}`
+    },
     questionLabel: function () {
       return `Question ${this.questionIndex}: ${this.question}`
     },
@@ -75,7 +91,14 @@ var app1 = new Vue({
       return banksTable
     },
     disabled: function () {
-      return this.timeleft <= 0
+      return this.sent || this.timeleft <= 0
+    },
+    sendButtonText: function () {
+      if (this.sent) {
+        return 'Sent ✔'
+      } else {
+        return 'Send'
+      }
     }
   },
   methods: {
@@ -94,6 +117,7 @@ var app1 = new Vue({
           answer: this.answer
         }
       })
+      this.sent = true
     },
     refreshBanks: function (event) {
       console.log('Refreshing banks')
@@ -146,6 +170,7 @@ var app1 = new Vue({
         vueApp.question = msg.payload.question
         vueApp.questionIndex = msg.payload.index
         vueApp.prompts = msg.payload.prompts
+        vueApp.sent = false
       }
       if (msg.topic === 'timeleft') {
         vueApp.timeleft = msg.payload
@@ -186,6 +211,9 @@ var app1 = new Vue({
         topic: 'username',
         payload: newValue
       })
+    },
+    myScore: function (newValue, oldValue) {
+      document.title = newValue
     }
   }
 })
