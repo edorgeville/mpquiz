@@ -26,7 +26,7 @@ var app1 = new Vue({
     questionLabel: function () {
       return `Question ${this.questionIndex}: ${this.question}`
     },
-    sessionId: function () {
+    userId: function () {
       function makeId (length) {
         var result = ''
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
@@ -36,19 +36,19 @@ var app1 = new Vue({
         }
         return result
       }
-      var sessionId = Vue.$cookies.get('sessionId')
-      if (sessionId == null) {
-        sessionId = makeId(4)
-        Vue.$cookies.set('sessionId', sessionId)
+      var userId = Vue.$cookies.get('userId')
+      if (userId == null) {
+        userId = makeId(4)
+        Vue.$cookies.set('userId', userId)
       }
-      return sessionId
+      return userId
     },
     scoresTable: function () {
       const scoresTable = []
-      for (const [session, value] of Object.entries(this.scores)) {
+      for (const [user, value] of Object.entries(this.scores)) {
         scoresTable.push({
           ...value,
-          session: session
+          user: user
         })
       }
       Object.entries(this.scores)
@@ -59,7 +59,7 @@ var app1 = new Vue({
     send: function (msg) {
       uibuilder.send({
         ...msg,
-        sessionId: this.sessionId
+        userId: this.userId
       })
     },
     sendAnswer: function (event) {
@@ -123,7 +123,7 @@ var app1 = new Vue({
       // console.info('[indexjs:uibuilder.onChange:ioConnected] Socket.IO Connection Status Changed to:', newVal)
       vueApp.socketConnectedState = newVal
       uibuilder.send({
-        sessionId: vueApp.sessionId,
+        userId: vueApp.userId,
         payload: {}
       })
     })
