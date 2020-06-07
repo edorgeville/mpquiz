@@ -22,7 +22,8 @@ var app1 = new Vue({
     timeleft: 0,
     scores: {},
     banks: {},
-    currentModifier: {}
+    currentModifier: { win: {}, lose: {} },
+    username: 'john doe'
   },
   computed: {
     questionLabel: function () {
@@ -152,5 +153,14 @@ var app1 = new Vue({
       // console.info('[indexjs:uibuilder.onChange:serverTimeOffset] Offset of time between the browser and the server has changed to:', newVal)
       vueApp.serverTimeOffset = newVal
     })
+  },
+
+  watch: {
+    username: function (newValue, oldValue) {
+      this.send({
+        topic: 'username',
+        payload: newValue
+      })
+    }
   }
 })

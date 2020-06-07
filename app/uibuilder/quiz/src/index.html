@@ -55,6 +55,7 @@
     <div id="app" v-cloak>
         <b-container id="app_container">
             <h1>{{ userId }}</h1>
+            <b-form-input v-model="username" placeholder="Enter your name"></b-form-input>
             <h2>{{ timeMessage }}: {{ timeleft }} seconds</h2>
 
             <b-form-group :label="`${questionLabel}`" class="mx-auto">
@@ -78,10 +79,18 @@
             <h3>Current modifier</h3>
             <b-row class="p-3">
                 <b-col>
-                    Win: {{ currentModifier.win }}
+                    ✔ Win: 
+                    <ul>
+                        <li>Action: {{ currentModifier.win.action }}</li>
+                        <li>Value: {{ currentModifier.win.value }}</li>
+                    </ul>
                 </b-col>
                 <b-col>
-                    Lose: {{ currentModifier.lose }}
+                    ❌ Lose 
+                    <ul>
+                        <li>Action: {{ currentModifier.lose.action }}</li>
+                        <li>Value: {{ currentModifier.lose.value }}</li>
+                    </ul>
                 </b-col>
             </b-row>
 

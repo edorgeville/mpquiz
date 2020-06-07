@@ -1,5 +1,12 @@
 [
     {
+        "id": "ff75d04f.62496",
+        "type": "tab",
+        "label": "Main control",
+        "disabled": false,
+        "info": ""
+    },
+    {
         "id": "a4c1dacb.0aa0d8",
         "type": "tab",
         "label": "Init",
@@ -17,13 +24,6 @@
         "id": "10cb60ee.21f7af",
         "type": "tab",
         "label": "Bank",
-        "disabled": false,
-        "info": ""
-    },
-    {
-        "id": "ff75d04f.62496",
-        "type": "tab",
-        "label": "Main control",
         "disabled": false,
         "info": ""
     },
@@ -58,6 +58,67 @@
         ],
         "env": [],
         "color": "#DDAA99"
+    },
+    {
+        "id": "47d73e76.0a224",
+        "type": "subflow",
+        "name": "bankAction",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "99304e28.d50fa"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1100,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "8f0b0f9e.a477f",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 500,
+                "y": 400,
+                "wires": [
+                    {
+                        "id": "1e00c0be.b6f44f",
+                        "port": 6
+                    },
+                    {
+                        "id": "7eeb11d7.eb737",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#C7E9C0",
+        "icon": "font-awesome/fa-dollar",
+        "status": {
+            "x": 920,
+            "y": 300,
+            "wires": [
+                {
+                    "id": "7eeb11d7.eb737",
+                    "port": 0
+                },
+                {
+                    "id": "41008de.68b8e74",
+                    "port": 0
+                }
+            ]
+        }
     },
     {
         "id": "459911ab.41834",
@@ -161,42 +222,6 @@
         ]
     },
     {
-        "id": "2c5cc44c.27401c",
-        "type": "inject",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "topic": "",
-        "payload": "answers",
-        "payloadType": "global",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 120,
-        "y": 700,
-        "wires": [
-            [
-                "a8b0f11c.38663"
-            ]
-        ]
-    },
-    {
-        "id": "b68d620a.79929",
-        "type": "function",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "Decorate answers with valid",
-        "func": "const answers = msg.payload\nconst rightAnswers = msg.rightAnswers\n\nconst decoratedAnswers = {}\n\nfor (let [userId, userAnswers] of Object.entries(answers)) {\n    let decorateduserAnswers = {}\n    for (let [answerId, answer] of Object.entries(userAnswers)) {\n        decorateduserAnswers[answerId] = {\n            answer: answer,\n            rightAnswer: rightAnswers[answerId],\n            valid: rightAnswers[answerId] === answer\n        }\n    }\n    decoratedAnswers[userId] = decorateduserAnswers\n}\n\nmsg.payload = decoratedAnswers\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 660,
-        "y": 700,
-        "wires": [
-            [
-                "2fffff5e.72445"
-            ]
-        ]
-    },
-    {
         "id": "8fd9cfae.266be",
         "type": "template",
         "z": "a4c1dacb.0aa0d8",
@@ -261,33 +286,6 @@
         ]
     },
     {
-        "id": "a8b0f11c.38663",
-        "type": "change",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "rightAnswers",
-                "pt": "msg",
-                "to": "$globalContext('quiz').answer\t",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 380,
-        "y": 700,
-        "wires": [
-            [
-                "b68d620a.79929"
-            ]
-        ]
-    },
-    {
         "id": "ccf28461.4b38b8",
         "type": "function",
         "z": "a4c1dacb.0aa0d8",
@@ -302,77 +300,6 @@
                 "343f237f.e248ec"
             ]
         ]
-    },
-    {
-        "id": "2fffff5e.72445",
-        "type": "function",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "Compute score",
-        "func": "\nconst pl = {}\n\n\nfor (const userId in msg.payload) {\n    const user = msg.payload[userId]\n    let score = 0\n    Object.entries(user).forEach(([index, step]) => {\n        if (step.valid) {\n            score++\n        }\n    })\n    pl[userId] = {score: score, answers: user}\n}\nmsg.payload = pl\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 900,
-        "y": 700,
-        "wires": [
-            [
-                "57c78a42.196994",
-                "ccf29298.8059a"
-            ]
-        ]
-    },
-    {
-        "id": "57c78a42.196994",
-        "type": "debug",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1110,
-        "y": 640,
-        "wires": []
-    },
-    {
-        "id": "ccf29298.8059a",
-        "type": "change",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "scores",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1090,
-        "y": 700,
-        "wires": [
-            [
-                "79e05a9e.9aa7f4"
-            ]
-        ]
-    },
-    {
-        "id": "79e05a9e.9aa7f4",
-        "type": "link out",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "links": [
-            "e3a13a28.5e7b68",
-            "a9740e20.734df"
-        ],
-        "x": 1220,
-        "y": 700,
-        "wires": []
     },
     {
         "id": "736f38c0.268c08",
@@ -463,7 +390,6 @@
         "y": 240,
         "wires": [
             [
-                "7744f9d9.116908",
                 "9fce8e84.5c5e6"
             ]
         ]
@@ -518,36 +444,14 @@
         ]
     },
     {
-        "id": "7744f9d9.116908",
-        "type": "switch",
-        "z": "5624e464.08ccfc",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "nempty"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 1130,
-        "y": 240,
-        "wires": [
-            [
-                "fa5046ef.f3d648"
-            ]
-        ]
-    },
-    {
         "id": "9fce8e84.5c5e6",
         "type": "link out",
         "z": "5624e464.08ccfc",
         "name": "",
         "links": [
             "df39b260.08ee5",
-            "d49b54b9.67ba68"
+            "d49b54b9.67ba68",
+            "e5d092a8.77874"
         ],
         "x": 1035,
         "y": 280,
@@ -568,20 +472,6 @@
                 "d6f2e47d.bfa398"
             ]
         ]
-    },
-    {
-        "id": "fa5046ef.f3d648",
-        "type": "debug",
-        "z": "5624e464.08ccfc",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1330,
-        "y": 240,
-        "wires": []
     },
     {
         "id": "d6f2e47d.bfa398",
@@ -627,16 +517,30 @@
                 "t": "eq",
                 "v": "answer",
                 "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "username",
+                "vt": "str"
+            },
+            {
+                "t": "else"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 1,
+        "outputs": 3,
         "x": 910,
         "y": 520,
         "wires": [
             [
                 "d8f0c300.6cf85"
+            ],
+            [
+                "c5cd1b7d.8f5ef8"
+            ],
+            [
+                "ff2a38c.8366ac8"
             ]
         ]
     },
@@ -649,7 +553,7 @@
         "outputs": 1,
         "noerr": 0,
         "x": 1090,
-        "y": 520,
+        "y": 500,
         "wires": [
             []
         ]
@@ -809,13 +713,13 @@
     {
         "id": "99304e28.d50fa",
         "type": "function",
-        "z": "10cb60ee.21f7af",
+        "z": "47d73e76.0a224",
         "name": "Get userbank",
         "func": "const bank = global.get('bank') || {}\nconst userBank = bank[msg.payload.userId] || {coins: 0, stars: 0}\nmsg.userBank = userBank\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 360,
-        "y": 340,
+        "x": 200,
+        "y": 160,
         "wires": [
             [
                 "1e00c0be.b6f44f"
@@ -825,7 +729,7 @@
     {
         "id": "1e00c0be.b6f44f",
         "type": "switch",
-        "z": "10cb60ee.21f7af",
+        "z": "47d73e76.0a224",
         "name": "",
         "property": "payload.action",
         "propertyType": "msg",
@@ -847,6 +751,11 @@
             },
             {
                 "t": "eq",
+                "v": "divideCoins",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
                 "v": "addStars",
                 "vt": "str"
             },
@@ -854,13 +763,16 @@
                 "t": "eq",
                 "v": "removeStars",
                 "vt": "str"
+            },
+            {
+                "t": "else"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 5,
-        "x": 540,
-        "y": 340,
+        "outputs": 7,
+        "x": 380,
+        "y": 160,
         "wires": [
             [
                 "f393074b.5b6e28"
@@ -872,23 +784,27 @@
                 "1ea10e1b.3496d2"
             ],
             [
+                "6f40a341.72e71c"
+            ],
+            [
                 "7cf93f67.c8df8"
             ],
             [
                 "133890ea.e6691f"
-            ]
+            ],
+            []
         ]
     },
     {
         "id": "f393074b.5b6e28",
         "type": "function",
-        "z": "10cb60ee.21f7af",
+        "z": "47d73e76.0a224",
         "name": "addCoins",
         "func": "msg.userBank.coins += msg.payload.value\nif (msg.userBank.coins < 0) {\n    msg.userBank.coins = 0\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 700,
-        "y": 260,
+        "x": 540,
+        "y": 80,
         "wires": [
             [
                 "8f0b0f9e.a477f"
@@ -898,13 +814,13 @@
     {
         "id": "7cf93f67.c8df8",
         "type": "function",
-        "z": "10cb60ee.21f7af",
+        "z": "47d73e76.0a224",
         "name": "addStars",
         "func": "msg.userBank.stars += msg.payload.value\nif (msg.userBank.stars < 0) {\n    msg.userBank.stars = 0\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 700,
-        "y": 380,
+        "x": 540,
+        "y": 240,
         "wires": [
             [
                 "8f0b0f9e.a477f"
@@ -914,33 +830,16 @@
     {
         "id": "8f0b0f9e.a477f",
         "type": "function",
-        "z": "10cb60ee.21f7af",
+        "z": "47d73e76.0a224",
         "name": "Set userBank",
-        "func": "const bank = global.get('bank') || {}\nbank[msg.payload.userId] = msg.userBank\nglobal.set('bank', bank)\nmsg.payload = msg.userBank\nreturn msg;",
+        "func": "const bank = global.get('bank') || {}\nbank[msg.payload.userId] = msg.userBank\nglobal.set('bank', bank)\n// msg.payload = msg.userBank\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 920,
-        "y": 340,
+        "x": 760,
+        "y": 160,
         "wires": [
             [
-                "f509c2d9.8dfef"
-            ]
-        ]
-    },
-    {
-        "id": "c82022a.f52a3e",
-        "type": "http in",
-        "z": "10cb60ee.21f7af",
-        "name": "",
-        "url": "/api/bank",
-        "method": "post",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 120,
-        "y": 340,
-        "wires": [
-            [
-                "99304e28.d50fa"
+                "41008de.68b8e74"
             ]
         ]
     },
@@ -959,41 +858,9 @@
         "y": 660,
         "wires": [
             [
-                "6d4b40a.958a5c"
+                "11d7e96f.d9e057"
             ]
         ]
-    },
-    {
-        "id": "6d4b40a.958a5c",
-        "type": "http request",
-        "z": "10cb60ee.21f7af",
-        "name": "",
-        "method": "POST",
-        "ret": "txt",
-        "paytoqs": false,
-        "url": "localhost:1880/api/bank",
-        "tls": "",
-        "persist": false,
-        "proxy": "",
-        "authType": "",
-        "x": 780,
-        "y": 660,
-        "wires": [
-            [
-                "3ba979af.a21be6"
-            ]
-        ]
-    },
-    {
-        "id": "42913d03.d146f4",
-        "type": "http response",
-        "z": "10cb60ee.21f7af",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 1330,
-        "y": 340,
-        "wires": []
     },
     {
         "id": "74fdc550.132b2c",
@@ -1022,33 +889,6 @@
         "wires": [
             [
                 "74fdc550.132b2c"
-            ]
-        ]
-    },
-    {
-        "id": "f509c2d9.8dfef",
-        "type": "change",
-        "z": "10cb60ee.21f7af",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "statusCode",
-                "pt": "msg",
-                "to": "200",
-                "tot": "num"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1140,
-        "y": 340,
-        "wires": [
-            [
-                "42913d03.d146f4"
             ]
         ]
     },
@@ -1121,83 +961,6 @@
         "headers": {},
         "x": 770,
         "y": 180,
-        "wires": []
-    },
-    {
-        "id": "7fe89186.b2461",
-        "type": "inject",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "topic": "",
-        "payload": "answers",
-        "payloadType": "global",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 80,
-        "y": 940,
-        "wires": [
-            [
-                "1f16502.fa86cb"
-            ]
-        ]
-    },
-    {
-        "id": "fee78827.6a50a8",
-        "type": "function",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "Decorate answers with valid",
-        "func": "const answers = msg.payload\nconst rightAnswers = msg.rightAnswers\n\nconst decoratedAnswers = {}\n\nfor (let [userId, userAnswers] of Object.entries(answers)) {\n    let decorateduserAnswers = {}\n    for (let [answerId, answer] of Object.entries(userAnswers)) {\n        decorateduserAnswers[answerId] = {\n            answer: answer,\n            rightAnswer: rightAnswers[answerId],\n            valid: rightAnswers[answerId] === answer\n        }\n    }\n    decoratedAnswers[userId] = decorateduserAnswers\n}\n\nmsg.payload = decoratedAnswers\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 620,
-        "y": 940,
-        "wires": [
-            [
-                "4dd0f566.3efe9c"
-            ]
-        ]
-    },
-    {
-        "id": "1f16502.fa86cb",
-        "type": "change",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "rightAnswers",
-                "pt": "msg",
-                "to": "$globalContext('quiz').answer\t",
-                "tot": "jsonata"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 340,
-        "y": 940,
-        "wires": [
-            [
-                "fee78827.6a50a8"
-            ]
-        ]
-    },
-    {
-        "id": "4dd0f566.3efe9c",
-        "type": "debug",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 870,
-        "y": 940,
         "wires": []
     },
     {
@@ -1652,34 +1415,7 @@
         "y": 800,
         "wires": [
             [
-                "fb9a574b.75a2e8"
-            ]
-        ]
-    },
-    {
-        "id": "fb9a574b.75a2e8",
-        "type": "change",
-        "z": "ff75d04f.62496",
-        "name": "",
-        "rules": [
-            {
-                "t": "move",
-                "p": "topic",
-                "pt": "msg",
-                "to": "payload.userId",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 515,
-        "y": 800,
-        "wires": [
-            [
-                "74a9565b.8726a8"
+                "c8a557b9.f51908"
             ]
         ]
     },
@@ -1696,28 +1432,10 @@
         "persist": false,
         "proxy": "",
         "authType": "",
-        "x": 685,
-        "y": 800,
+        "x": 930,
+        "y": 680,
         "wires": [
-            [
-                "5015bfbe.fddc9"
-            ]
-        ]
-    },
-    {
-        "id": "5015bfbe.fddc9",
-        "type": "json",
-        "z": "ff75d04f.62496",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 850,
-        "y": 800,
-        "wires": [
-            [
-                "75eba718.8632b8"
-            ]
+            []
         ]
     },
     {
@@ -1783,7 +1501,9 @@
         "x": 75,
         "y": 920,
         "wires": [
-            []
+            [
+                "e229424.dd5e9c"
+            ]
         ],
         "l": false
     },
@@ -1810,12 +1530,12 @@
         "id": "6cc36937.ed3128",
         "type": "template",
         "z": "ff75d04f.62496",
-        "name": "",
+        "name": "+10 / -2",
         "field": "payload",
         "fieldType": "msg",
         "format": "yaml",
         "syntax": "mustache",
-        "template": "---\nwin:\n    action: addCoins\n    value: 10\nlose:\n    action: removeCoins\n    value: 10",
+        "template": "---\nwin:\n    action: addCoins\n    value: 10\nlose:\n    action: removeCoins\n    value: 2",
         "output": "yaml",
         "x": 220,
         "y": 880,
@@ -2086,10 +1806,14 @@
         "key": "topic",
         "joiner": "\\n",
         "joinerType": "str",
-        "accumulate": "false",
+        "accumulate": false,
         "timeout": "",
         "count": "",
         "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
         "x": 1010,
         "y": 800,
         "wires": [
@@ -2131,7 +1855,8 @@
         "y": 800,
         "wires": [
             [
-                "e80bc5d1.5923a8"
+                "2bcd0426.1d51fc",
+                "cb4a2e0e.f6b91"
             ]
         ]
     },
@@ -2154,7 +1879,7 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1590,
+        "x": 1850,
         "y": 800,
         "wires": [
             [
@@ -2171,7 +1896,7 @@
             "e3a13a28.5e7b68",
             "a9740e20.734df"
         ],
-        "x": 1715,
+        "x": 1995,
         "y": 800,
         "wires": []
     },
@@ -2266,13 +1991,13 @@
     {
         "id": "10c0a03e.ebdc5",
         "type": "function",
-        "z": "10cb60ee.21f7af",
+        "z": "47d73e76.0a224",
         "name": "removeCoins",
         "func": "msg.userBank.coins -= msg.payload.value\nif (msg.userBank.coins < 0) {\n    msg.userBank.coins = 0\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 710,
-        "y": 300,
+        "x": 550,
+        "y": 120,
         "wires": [
             [
                 "8f0b0f9e.a477f"
@@ -2282,13 +2007,13 @@
     {
         "id": "133890ea.e6691f",
         "type": "function",
-        "z": "10cb60ee.21f7af",
-        "name": "addStars",
-        "func": "msg.userBank.stars += msg.payload.value\nif (msg.userBank.stars < 0) {\n    msg.userBank.stars = 0\n}\nreturn msg;",
+        "z": "47d73e76.0a224",
+        "name": "removeStars",
+        "func": "msg.userBank.stars -= msg.payload.value\nif (msg.userBank.stars < 0) {\n    msg.userBank.stars = 0\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 700,
-        "y": 420,
+        "x": 550,
+        "y": 280,
         "wires": [
             [
                 "8f0b0f9e.a477f"
@@ -2298,17 +2023,396 @@
     {
         "id": "1ea10e1b.3496d2",
         "type": "function",
-        "z": "10cb60ee.21f7af",
+        "z": "47d73e76.0a224",
         "name": "multiplyCoins",
         "func": "msg.userBank.coins = msg.userBank.coins * msg.payload.value\nif (msg.userBank.coins < 0) {\n    msg.userBank.coins = 0\n}\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
-        "x": 710,
-        "y": 340,
+        "x": 550,
+        "y": 160,
         "wires": [
             [
                 "8f0b0f9e.a477f"
             ]
         ]
+    },
+    {
+        "id": "a8b0f11c.38663",
+        "type": "change",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "rightAnswers",
+                "pt": "msg",
+                "to": "$globalContext('quiz').answer\t",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 440,
+        "y": 620,
+        "wires": [
+            [
+                "b68d620a.79929"
+            ]
+        ]
+    },
+    {
+        "id": "2c5cc44c.27401c",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "payload": "answers",
+        "payloadType": "global",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 620,
+        "wires": [
+            [
+                "a8b0f11c.38663"
+            ]
+        ]
+    },
+    {
+        "id": "b68d620a.79929",
+        "type": "function",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "Decorate answers with valid",
+        "func": "const answers = msg.payload\nconst rightAnswers = msg.rightAnswers\n\nconst decoratedAnswers = {}\n\nfor (let [userId, userAnswers] of Object.entries(answers)) {\n    let decorateduserAnswers = {}\n    for (let [answerId, answer] of Object.entries(userAnswers)) {\n        decorateduserAnswers[answerId] = {\n            answer: answer,\n            rightAnswer: rightAnswers[answerId],\n            valid: rightAnswers[answerId] === answer\n        }\n    }\n    decoratedAnswers[userId] = decorateduserAnswers\n}\n\nmsg.payload = decoratedAnswers\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 720,
+        "y": 620,
+        "wires": [
+            [
+                "2fffff5e.72445"
+            ]
+        ]
+    },
+    {
+        "id": "2fffff5e.72445",
+        "type": "function",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "Compute score",
+        "func": "\nconst pl = {}\n\n\nfor (const userId in msg.payload) {\n    const user = msg.payload[userId]\n    let score = 0\n    Object.entries(user).forEach(([index, step]) => {\n        if (step.valid) {\n            score++\n        }\n    })\n    pl[userId] = {score: score, answers: user}\n}\nmsg.payload = pl\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 960,
+        "y": 620,
+        "wires": [
+            [
+                "57c78a42.196994",
+                "ccf29298.8059a"
+            ]
+        ]
+    },
+    {
+        "id": "57c78a42.196994",
+        "type": "debug",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1170,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "ccf29298.8059a",
+        "type": "change",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "scores",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1150,
+        "y": 620,
+        "wires": [
+            [
+                "79e05a9e.9aa7f4"
+            ]
+        ]
+    },
+    {
+        "id": "79e05a9e.9aa7f4",
+        "type": "link out",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "links": [
+            "e3a13a28.5e7b68",
+            "a9740e20.734df"
+        ],
+        "x": 1280,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "9ed85094.f7ff6",
+        "type": "comment",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "OBSOLETE - Compute score",
+        "info": "",
+        "x": 240,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "c5cd1b7d.8f5ef8",
+        "type": "function",
+        "z": "5624e464.08ccfc",
+        "name": "Store username",
+        "func": "const users = global.get('users') || {}\n\nconst userId = msg.userId\nconst username = msg.payload\n\nconst user = users[userId]\n\nuser.username = username\n\n// store back\n// users[userId] = users\n// global.set('users', users)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1100,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ff2a38c.8366ac8",
+        "type": "switch",
+        "z": "5624e464.08ccfc",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1070,
+        "y": 600,
+        "wires": [
+            [
+                "1d3dadb0.59f042"
+            ]
+        ]
+    },
+    {
+        "id": "1d3dadb0.59f042",
+        "type": "debug",
+        "z": "5624e464.08ccfc",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1230,
+        "y": 600,
+        "wires": []
+    },
+    {
+        "id": "2bcd0426.1d51fc",
+        "type": "function",
+        "z": "ff75d04f.62496",
+        "name": "Replace userId with username",
+        "func": "const pl = {}\n\nconst users = global.get('users') || {}\n\nfor (let [userId, value] of Object.entries(msg.payload)) {\n    const user = users[userId]\n    let username = userId\n    if (user) {\n        username = user.username || userId\n    }\n    \n    pl[username] = value\n}\n\nmsg.payload = pl\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1690,
+        "y": 840,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cb4a2e0e.f6b91",
+        "type": "function",
+        "z": "ff75d04f.62496",
+        "name": "Add username",
+        "func": "const pl = {}\n\nconst users = global.get('users') || {}\n\nfor (let [userId, value] of Object.entries(msg.payload)) {\n    const user = users[userId]\n    let username = userId\n    if (user) {\n        username = user.username || userId\n    }\n    \n    console.log(user)\n    \n    pl[userId] = {\n        username: username,\n        ...value\n    }\n}\n\nmsg.payload = pl\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1640,
+        "y": 800,
+        "wires": [
+            [
+                "e80bc5d1.5923a8",
+                "37d1f368.89130c"
+            ]
+        ]
+    },
+    {
+        "id": "37d1f368.89130c",
+        "type": "debug",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1740,
+        "y": 720,
+        "wires": []
+    },
+    {
+        "id": "c8a557b9.f51908",
+        "type": "change",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.userId",
+                "pt": "msg",
+                "to": "topic",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 530,
+        "y": 800,
+        "wires": [
+            [
+                "d33f063c.ae41e8"
+            ]
+        ]
+    },
+    {
+        "id": "d33f063c.ae41e8",
+        "type": "subflow:47d73e76.0a224",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "env": [],
+        "x": 770,
+        "y": 800,
+        "wires": [
+            [
+                "75eba718.8632b8"
+            ],
+            [
+                "9f4b1e89.9f516"
+            ]
+        ]
+    },
+    {
+        "id": "7eeb11d7.eb737",
+        "type": "catch",
+        "z": "47d73e76.0a224",
+        "name": "",
+        "scope": null,
+        "uncaught": false,
+        "x": 380,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "41008de.68b8e74",
+        "type": "template",
+        "z": "47d73e76.0a224",
+        "name": "Status",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{{payload.userId}}: {{userBank.stars}}⭐,{{userBank.coins}}💲",
+        "output": "str",
+        "x": 770,
+        "y": 240,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e229424.dd5e9c",
+        "type": "template",
+        "z": "ff75d04f.62496",
+        "name": "Double / half",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "yaml",
+        "syntax": "mustache",
+        "template": "---\nwin:\n    action: multiplyCoins\n    value: 2\nlose:\n    action: divideCoins\n    value: 2",
+        "output": "yaml",
+        "x": 230,
+        "y": 920,
+        "wires": [
+            [
+                "7035b853.48f2b8"
+            ]
+        ]
+    },
+    {
+        "id": "6f40a341.72e71c",
+        "type": "function",
+        "z": "47d73e76.0a224",
+        "name": "divideCoins",
+        "func": "msg.userBank.coins = parseInt(msg.userBank.coins / msg.payload.value)\nif (msg.userBank.coins < 0) {\n    msg.userBank.coins = 0\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550,
+        "y": 200,
+        "wires": [
+            [
+                "8f0b0f9e.a477f"
+            ]
+        ]
+    },
+    {
+        "id": "11d7e96f.d9e057",
+        "type": "subflow:47d73e76.0a224",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "env": [],
+        "x": 770,
+        "y": 660,
+        "wires": [
+            [
+                "3ba979af.a21be6"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "9f4b1e89.9f516",
+        "type": "debug",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "error",
+        "targetType": "msg",
+        "x": 1000,
+        "y": 900,
+        "wires": []
     }
 ]
