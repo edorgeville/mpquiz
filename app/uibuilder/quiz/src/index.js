@@ -32,12 +32,14 @@ var app1 = new Vue({
     socketConnectedState: false,
     serverTimeOffset: '[unknown]',
     imgProps: { width: 75, height: 75 },
-    selectedAnswer: 'radio1',
-    answers: [
-      { text: 'Radio 1', value: 'radio1' },
-      { text: 'Radio 2', value: 'radio2' },
-      { text: 'Radio 3 (disabled)', value: 'radio3', disabled: true },
-      { text: 'Radio 4', value: 'radio4' }
+    question: 'No question yet',
+    questionIndex: null,
+    answer: 'radio1',
+    prompts: [
+      // { text: 'Radio 1', value: 'radio1' },
+      // { text: 'Radio 2', value: 'radio2' },
+      // { text: 'Radio 3 (disabled)', value: 'radio3', disabled: true },
+      // { text: 'Radio 4', value: 'radio4' }
     ],
     timeMessage: 'Standby',
     timeleft: 0,
@@ -53,6 +55,9 @@ var app1 = new Vue({
     msgsCtrlSent: 0
   }, // --- End of data --- //
   computed: {
+    questionLabel: function () {
+      return `Question ${this.questionIndex}: ${this.question}`
+    },
     hLastRcvd: function () {
       var msgRecvd = this.msgRecvd
       if (typeof msgRecvd === 'string') return 'Last Message Received = ' + msgRecvd
@@ -93,16 +98,20 @@ var app1 = new Vue({
     }
   }, // --- End of computed --- //
   methods: {
-    send: function (payload) {
+    send: function (msg) {
       uibuilder.send({
-        sessionId: this.sessionId,
-        payload: payload
+        ...msg,
+        sessionId: this.sessionId
       })
     },
     sendAnswer: function (event) {
       console.log('Sending answer')
       this.send({
-        answer: this.selectedAnswer
+        topic: 'answer',
+        payload: {
+          questionIndex: this.questionIndex,
+          answer: this.answer
+        }
       })
     },
     increment: function (event) {
@@ -173,9 +182,10 @@ var app1 = new Vue({
       // console.info('[indexjs:uibuilder.onChange] msg received from Node-RED server:', newVal)
       vueApp.msgRecvd = msg
       if (msg.topic === 'question') {
-        vueApp.selectedAnswer = null
+        vueApp.answer = null
         vueApp.question = msg.payload.question
-        vueApp.answers = msg.payload.answers
+        vueApp.questionIndex = msg.payload.index
+        vueApp.prompts = msg.payload.prompts
       }
       if (msg.topic === 'timeleft') {
         vueApp.timeleft = msg.payload

@@ -73,23 +73,10 @@
         "y": 280,
         "wires": [
             [
-                "74f23c4c.564a24"
+                "61caa82f.ea5278",
+                "77c54779.bc6258"
             ]
         ]
-    },
-    {
-        "id": "b39760f8.1681b",
-        "type": "debug",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1390,
-        "y": 280,
-        "wires": []
     },
     {
         "id": "2c470152.92e29e",
@@ -303,42 +290,15 @@
         ]
     },
     {
-        "id": "74f23c4c.564a24",
-        "type": "change",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "sessionId",
-                "tot": "msg"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 1070,
-        "y": 280,
-        "wires": [
-            [
-                "61caa82f.ea5278"
-            ]
-        ]
-    },
-    {
         "id": "a4857dc4.56899",
         "type": "template",
         "z": "a4c1dacb.0aa0d8",
-        "name": "Question 1",
+        "name": "Question 0",
         "field": "payload",
         "fieldType": "msg",
         "format": "yaml",
         "syntax": "mustache",
-        "template": "---\nquestion: Question?\nanswers:\n    - Réponse A\n    - Réponse B\n    - Réponse C\n    - Réponse D",
+        "template": "---\nindex: 0\nquestion: Question?\nprompts:\n    - Réponse A\n    - Réponse B\n    - Réponse C\n    - Réponse D",
         "output": "yaml",
         "x": 230,
         "y": 520,
@@ -374,7 +334,7 @@
         "type": "function",
         "z": "a4c1dacb.0aa0d8",
         "name": "Answers array to text/value pairs",
-        "func": "msg.payload.answers = msg.payload.answers.map((question, index) => {\n    return {\n        text: question,\n        value: String.fromCharCode(index + 65) // A == 65, B == 66, etc\n    }\n})\nreturn msg;",
+        "func": "msg.payload.answers = msg.payload.prompts.map((prompt, index) => {\n    return {\n        text: prompt,\n        // value: String.fromCharCode(index + 65) // A == 65, B == 66, etc\n        value: index\n    }\n})\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 490,
@@ -382,29 +342,6 @@
         "wires": [
             [
                 "a6f69435.67b368"
-            ]
-        ]
-    },
-    {
-        "id": "61caa82f.ea5278",
-        "type": "switch",
-        "z": "a4c1dacb.0aa0d8",
-        "name": "",
-        "property": "payload",
-        "propertyType": "msg",
-        "rules": [
-            {
-                "t": "nempty"
-            }
-        ],
-        "checkall": "true",
-        "repair": false,
-        "outputs": 1,
-        "x": 1240,
-        "y": 280,
-        "wires": [
-            [
-                "b39760f8.1681b"
             ]
         ]
     },
@@ -427,11 +364,12 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 730,
-        "y": 560,
+        "x": 630,
+        "y": 740,
         "wires": [
             [
-                "48c37a9b.aee8b4"
+                "48c37a9b.aee8b4",
+                "70164c8c.3ebd14"
             ]
         ]
     },
@@ -439,12 +377,12 @@
         "id": "5f8a0871.c57338",
         "type": "template",
         "z": "a4c1dacb.0aa0d8",
-        "name": "Question 2",
+        "name": "Question 1",
         "field": "payload",
         "fieldType": "msg",
         "format": "yaml",
         "syntax": "mustache",
-        "template": "---\nquestion: De quelle couleur était le cheval blanc d'Henri 4?\nanswers:\n    - Bleu\n    - Blanc\n    - Rouge\n    - Vert",
+        "template": "---\nindex: 1\nquestion: De quelle couleur était le cheval blanc d'Henri 4?\nprompts:\n    - Bleu\n    - Blanc\n    - Rouge\n    - Vert",
         "output": "yaml",
         "x": 230,
         "y": 560,
@@ -458,12 +396,12 @@
         "id": "6cdb9f5b.d368c",
         "type": "template",
         "z": "a4c1dacb.0aa0d8",
-        "name": "Question 3",
+        "name": "Question 2",
         "field": "payload",
         "fieldType": "msg",
         "format": "yaml",
         "syntax": "mustache",
-        "template": "---\nquestion: Question?\nanswers:\n    - Réponse A\n    - Réponse B\n    - Réponse C\n    - Réponse D",
+        "template": "---\nindex: 2\nquestion: Question?\nprompts:\n    - Réponse A\n    - Réponse B\n    - Réponse C\n    - Réponse D",
         "output": "yaml",
         "x": 230,
         "y": 600,
@@ -531,8 +469,8 @@
         "ignoreCase": false,
         "repeat": false,
         "again": false,
-        "x": 610,
-        "y": 740,
+        "x": 1550,
+        "y": 860,
         "wires": [
             [
                 "6d591598.406c5c"
@@ -554,8 +492,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 240,
-        "y": 740,
+        "x": 1180,
+        "y": 860,
         "wires": [
             [
                 "4d63487d.74ae38"
@@ -573,8 +511,8 @@
         "syntax": "mustache",
         "template": "---\npayload: on\ntimeout: 10\nwarning: 2",
         "output": "yaml",
-        "x": 420,
-        "y": 740,
+        "x": 1360,
+        "y": 860,
         "wires": [
             [
                 "a17655e3.5f2ab8"
@@ -600,8 +538,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 790,
-        "y": 760,
+        "x": 1730,
+        "y": 880,
         "wires": [
             [
                 "76faccd2.7c2824"
@@ -620,8 +558,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 410,
-        "y": 800,
+        "x": 1350,
+        "y": 920,
         "wires": [
             [
                 "a17655e3.5f2ab8"
@@ -640,8 +578,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 410,
-        "y": 840,
+        "x": 1350,
+        "y": 960,
         "wires": [
             [
                 "a17655e3.5f2ab8"
@@ -660,8 +598,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 410,
-        "y": 880,
+        "x": 1350,
+        "y": 1000,
         "wires": [
             [
                 "a17655e3.5f2ab8"
@@ -693,8 +631,8 @@
         "links": [
             "e3a13a28.5e7b68"
         ],
-        "x": 915,
-        "y": 740,
+        "x": 1855,
+        "y": 860,
         "wires": []
     },
     {
@@ -716,8 +654,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 790,
-        "y": 720,
+        "x": 1730,
+        "y": 840,
         "wires": [
             [
                 "76faccd2.7c2824"
@@ -732,8 +670,8 @@
         "links": [
             "48c37a9b.aee8b4"
         ],
-        "x": 295,
-        "y": 700,
+        "x": 1235,
+        "y": 820,
         "wires": [
             [
                 "4d63487d.74ae38"
@@ -749,8 +687,379 @@
             "e3a13a28.5e7b68",
             "b111ba2b.a9ab08"
         ],
-        "x": 875,
-        "y": 560,
+        "x": 775,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "b39760f8.1681b",
+        "type": "debug",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1310,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "61caa82f.ea5278",
+        "type": "switch",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1110,
+        "y": 280,
+        "wires": [
+            [
+                "b39760f8.1681b"
+            ]
+        ]
+    },
+    {
+        "id": "77c54779.bc6258",
+        "type": "link out",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "links": [
+            "df39b260.08ee5"
+        ],
+        "x": 1015,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "df39b260.08ee5",
+        "type": "link in",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "links": [
+            "77c54779.bc6258"
+        ],
+        "x": 1095,
+        "y": 320,
+        "wires": [
+            [
+                "58d1e202.68f83c"
+            ]
+        ]
+    },
+    {
+        "id": "58d1e202.68f83c",
+        "type": "switch",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "answer",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 1230,
+        "y": 320,
+        "wires": [
+            [
+                "8bc10ae7.075fa8"
+            ]
+        ]
+    },
+    {
+        "id": "8bc10ae7.075fa8",
+        "type": "function",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "Store answer",
+        "func": "const answers = global.get('answers') || {}\n\nconst sessionId = msg.sessionId\nconst questionIndex = msg.payload.questionIndex\nconst answer = msg.payload.answer\n\nconst sessionAnswers = answers[sessionId] || {}\n\nsessionAnswers[questionIndex] = answer\n\n// store back\nanswers[sessionId] = sessionAnswers\nglobal.set('answers', answers)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1410,
+        "y": 320,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2c5cc44c.27401c",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "payload": "answers",
+        "payloadType": "global",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 220,
+        "y": 1240,
+        "wires": [
+            [
+                "a8b0f11c.38663"
+            ]
+        ]
+    },
+    {
+        "id": "b68d620a.79929",
+        "type": "function",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "Decorate answers with valid",
+        "func": "const answers = msg.payload\nconst rightAnswers = msg.rightAnswers\n\nconst decoratedAnswers = {}\n\nfor (let [sessionId, sessionAnswers] of Object.entries(answers)) {\n    let decoratedSessionAnswers = {}\n    for (let [answerId, answer] of Object.entries(sessionAnswers)) {\n        decoratedSessionAnswers[answerId] = {\n            answer: answer,\n            rightAnswer: rightAnswers[answerId],\n            valid: rightAnswers[answerId] === answer\n        }\n    }\n    decoratedAnswers[sessionId] = decoratedSessionAnswers\n}\n\nmsg.payload = decoratedAnswers\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 760,
+        "y": 1240,
+        "wires": [
+            [
+                "f8f2fe71.7cf4a"
+            ]
+        ]
+    },
+    {
+        "id": "f8f2fe71.7cf4a",
+        "type": "debug",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 990,
+        "y": 1240,
+        "wires": []
+    },
+    {
+        "id": "8fd9cfae.266be",
+        "type": "template",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "Quiz",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "yaml",
+        "syntax": "mustache",
+        "template": "---\n-   question: Question?\n    prompts:\n        - Réponse A\n        - Réponse B\n        - Réponse C\n        - Réponse D\n    answer: 0\n-   question: De quelle couleur était le cheval blanc d'Henri 4?\n    prompts:\n        - Bleu\n        - Blanc\n        - Rouge\n        - Vert\n    answer: 1\n-   question: Combien font 2+2 ?\n    prompts:\n        - 1\n        - 12\n        - 4\n        - 3.14159265359\n    answer: 3",
+        "output": "yaml",
+        "x": 370,
+        "y": 80,
+        "wires": [
+            [
+                "ccf28461.4b38b8"
+            ]
+        ]
+    },
+    {
+        "id": "467aa19f.9e431",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "x": 190,
+        "y": 80,
+        "wires": [
+            [
+                "8fd9cfae.266be"
+            ]
+        ]
+    },
+    {
+        "id": "343f237f.e248ec",
+        "type": "change",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "quiz",
+                "pt": "global",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 760,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3f0c98e2.607398",
+        "type": "function",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "Get step from index",
+        "func": "const steps = global.get('quiz')\nconst step = steps.map(({answer, ...rest}) => rest) // strips answer\n\nmsg.payload = step[msg.payload]\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 370,
+        "y": 740,
+        "wires": [
+            [
+                "a6f69435.67b368"
+            ]
+        ]
+    },
+    {
+        "id": "16f71894.88d6d7",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "payload": "0",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 700,
+        "wires": [
+            [
+                "3f0c98e2.607398"
+            ]
+        ]
+    },
+    {
+        "id": "eb976aca.bb9a18",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 740,
+        "wires": [
+            [
+                "3f0c98e2.607398"
+            ]
+        ]
+    },
+    {
+        "id": "e2c28816.4d9048",
+        "type": "inject",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "topic": "",
+        "payload": "2",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 780,
+        "wires": [
+            [
+                "3f0c98e2.607398"
+            ]
+        ]
+    },
+    {
+        "id": "70164c8c.3ebd14",
+        "type": "debug",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 790,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "a8b0f11c.38663",
+        "type": "change",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "rightAnswers",
+                "pt": "msg",
+                "to": "$globalContext('quiz').answer\t",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 1240,
+        "wires": [
+            [
+                "b68d620a.79929"
+            ]
+        ]
+    },
+    {
+        "id": "ccf28461.4b38b8",
+        "type": "function",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "Add index",
+        "func": "msg.payload = msg.payload.map((step, index) => {\n    return {\n        ...step,\n        index: index\n    }\n})\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 550,
+        "y": 80,
+        "wires": [
+            [
+                "343f237f.e248ec"
+            ]
+        ]
+    },
+    {
+        "id": "83cefd08.94197",
+        "type": "comment",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "OBSOLETE",
+        "info": "",
+        "x": 170,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "73983f45.7e8c8",
+        "type": "comment",
+        "z": "a4c1dacb.0aa0d8",
+        "name": "FRESH AF",
+        "info": "",
+        "x": 160,
+        "y": 660,
         "wires": []
     }
 ]

@@ -60,13 +60,14 @@
             </h1>
             <h2>{{ timeMessage }}: {{ timeleft }} seconds</h2>
 
-            <b-form-group label="Button style radios">
+            <b-form-group :label="`${questionLabel}`">
                 <b-form-radio-group
                   id="btn-radios-1"
-                  v-model="selectedAnswer"
-                  :options="answers"
+                  v-model="answer"
+                  :options="prompts"
                   buttons
                   name="radios-btn-default"
+                  :disabled="timeleft <= 0"
                 ></b-form-radio-group>
                 <b-button id="btn_increment" pill variant="primary" v-on:click="sendAnswer">Send</b-button>
               </b-form-group>

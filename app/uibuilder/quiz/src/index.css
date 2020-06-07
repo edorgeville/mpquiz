@@ -12,3 +12,7 @@
 .syntax-highlight > .string {color:#5dff39;}
 .syntax-highlight > .number {color:#70aeff;}
 .syntax-highlight > .boolean {color:#b993ff;}
+
+.btn.active {
+  background-color: #343a40;
+}
