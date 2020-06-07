@@ -16,3 +16,15 @@
 .btn.active {
   background-color: #343a40;
 }
+
+#app_container {
+  max-width: 500px !important;
+}
+
+h1 {
+  text-align: center;
+}
+
+h1 img {
+  max-width: 80%;
+}
