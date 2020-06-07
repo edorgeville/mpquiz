@@ -473,7 +473,8 @@
         "y": 260,
         "wires": [
             [
-                "11877fcc.be60b"
+                "11877fcc.be60b",
+                "60498ceb.3d6144"
             ]
         ]
     },
@@ -2567,5 +2568,24 @@
         "x": 635,
         "y": 460,
         "wires": []
+    },
+    {
+        "id": "60498ceb.3d6144",
+        "type": "uibuilder",
+        "z": "5624e464.08ccfc",
+        "name": "",
+        "topic": "",
+        "url": "scoreboard",
+        "fwdInMessages": false,
+        "allowScripts": false,
+        "allowStyles": false,
+        "copyIndex": true,
+        "showfolder": false,
+        "x": 710,
+        "y": 180,
+        "wires": [
+            [],
+            []
+        ]
     }
 ]

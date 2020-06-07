@@ -1,0 +1,62 @@
+/* Cloak elements on initial load to hide the possible display of {{ ... }} 
+ * Add to the app tag or to specific tags
+ * To display "loading...", change to the following:
+ *    [v-cloak] > * { display:none }
+ *    [v-cloak]::before { content: "loading…" }
+ */
+[v-cloak] { display: none; }
+
+/*  Colours for Syntax Highlighted pre's */
+.syntax-highlight {color:white;background-color:black;padding:5px 10px;}
+.syntax-highlight > .key {color:#ffbf35}
+.syntax-highlight > .string {color:#5dff39;}
+.syntax-highlight > .number {color:#70aeff;}
+.syntax-highlight > .boolean {color:#b993ff;}
+
+.btn.active {
+  background-color: #343a40;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background-color:rgba(255, 255, 255, 0.5);
+  background-image: url('https://images.unsplash.com/photo-1547623641-d2c56c03e2a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80');
+  /* background-image: url('https://images.unsplash.com/photo-1590034081321-ee896cccfedd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80'); */
+  background-size: cover;
+  background-blend-mode: multiply;
+}
+
+#app {
+  position: relative;
+  width: 90%;
+  height: 90%;
+  top: 5%;
+  left: 5%;
+  background: inherit;
+  border-radius: 20px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+#app:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  position: absolute;
+  bottom: 0;
+  box-shadow: inset 0 0 0 200px rgba(255,255,255,0.05);
+  filter: blur(10px) brightness(110%);
+  z-index: 2;
+  backdrop-filter: brightness(110%);
+}
+
+#app_container {
+  position: fixed;
+  z-index: 100;
+  padding: 1em;
+}
