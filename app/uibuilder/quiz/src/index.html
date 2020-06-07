@@ -96,7 +96,7 @@
 
             <b-row>
                 <b-col>
-                    <b-button variant="success">Buy star ⭐</b-button>
+                    <b-button variant="success" v-on:click="buyStar">Buy star ⭐</b-button>
                 </b-col>
                 <b-col>
                     <b-button variant="primary" v-on:click="refreshBanks">Refresh banks 🔃</b-button>
@@ -104,7 +104,7 @@
             </b-row>
 
             <h3 class=".mt-1">Banks 👛</h3>
-            <b-table striped hover :items="banksTable"></b-table>
+            <b-table striped hover :items="banksTable" :sort-by.sync="sortBy" :fields="banksTableFields" :sort-desc.sync="sortDesc" :tbody-tr-class="rowClass"></b-table>
 
         </b-container>
     </div>

@@ -22,6 +22,14 @@ var app1 = new Vue({
     timeleft: 0,
     scores: {},
     banks: {},
+    banksTableFields: [
+      { key: 'user', sortable: true },
+      { key: 'username', sortable: true },
+      { key: 'coins', sortable: true },
+      { key: 'stars', sortable: true }
+    ],
+    sortBy: 'stars',
+    sortDesc: true,
     currentModifier: { win: {}, lose: {} },
     username: ''
   },
@@ -87,11 +95,22 @@ var app1 = new Vue({
         }
       })
     },
-    refreshBanks: function (sevent) {
+    refreshBanks: function (event) {
       console.log('Refreshing banks')
       this.send({
         topic: 'refreshBanks'
       })
+    },
+    buyStar: function (event) {
+      console.log('Buying 1 star')
+      this.send({
+        topic: 'buyStars',
+        payload: 1
+      })
+    },
+    rowClass: function (item, type) {
+      if (!item || type !== 'row') return
+      if (item.user === this.userId) return 'table-success'
     }
   },
 

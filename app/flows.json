@@ -16,14 +16,14 @@
     {
         "id": "5624e464.08ccfc",
         "type": "tab",
-        "label": "Comms",
+        "label": "🌐 Comms",
         "disabled": false,
         "info": ""
     },
     {
         "id": "10cb60ee.21f7af",
         "type": "tab",
-        "label": "Bank",
+        "label": "💲 Bank",
         "disabled": false,
         "info": ""
     },
@@ -63,7 +63,7 @@
         "id": "47d73e76.0a224",
         "type": "subflow",
         "name": "bankAction",
-        "info": "",
+        "info": "Example `msg`:\n```yaml\npayload:\n    userId: ABCD\n    action: addCoins\n    value: 10\n```",
         "category": "",
         "in": [
             {
@@ -88,15 +88,15 @@
                 ]
             },
             {
-                "x": 500,
-                "y": 400,
+                "x": 920,
+                "y": 360,
                 "wires": [
                     {
-                        "id": "1e00c0be.b6f44f",
-                        "port": 6
+                        "id": "7eeb11d7.eb737",
+                        "port": 0
                     },
                     {
-                        "id": "7eeb11d7.eb737",
+                        "id": "163c8ace.5677b5",
                         "port": 0
                     }
                 ]
@@ -106,8 +106,8 @@
         "color": "#C7E9C0",
         "icon": "font-awesome/fa-dollar",
         "status": {
-            "x": 920,
-            "y": 300,
+            "x": 1100,
+            "y": 200,
             "wires": [
                 {
                     "id": "7eeb11d7.eb737",
@@ -466,7 +466,8 @@
             "9ad594da.369708",
             "f22fcb51.115478",
             "5cc7db3d.8989b4",
-            "46548650.6d59e8"
+            "46548650.6d59e8",
+            "f3ae4eff.b789c"
         ],
         "x": 580,
         "y": 260,
@@ -487,7 +488,7 @@
             "e5d092a8.77874"
         ],
         "x": 1035,
-        "y": 280,
+        "y": 240,
         "wires": []
     },
     {
@@ -562,12 +563,17 @@
                 "vt": "str"
             },
             {
+                "t": "eq",
+                "v": "buyStars",
+                "vt": "str"
+            },
+            {
                 "t": "else"
             }
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 4,
+        "outputs": 5,
         "x": 910,
         "y": 520,
         "wires": [
@@ -579,6 +585,9 @@
             ],
             [
                 "c7c533f2.b6601"
+            ],
+            [
+                "2aabbab5.1ad9e6"
             ],
             [
                 "ff2a38c.8366ac8"
@@ -656,8 +665,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 270,
-        "y": 660,
+        "x": 130,
+        "y": 260,
         "wires": [
             [
                 "e64a5635.642638"
@@ -683,8 +692,8 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 470,
-        "y": 660,
+        "x": 330,
+        "y": 260,
         "wires": [
             [
                 "f011c1f2.734d7"
@@ -703,8 +712,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 270,
-        "y": 700,
+        "x": 130,
+        "y": 300,
         "wires": [
             [
                 "e64a5635.642638"
@@ -723,8 +732,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 280,
-        "y": 740,
+        "x": 140,
+        "y": 340,
         "wires": [
             [
                 "e64a5635.642638"
@@ -743,8 +752,8 @@
         "crontab": "",
         "once": false,
         "onceDelay": 0.1,
-        "x": 270,
-        "y": 780,
+        "x": 130,
+        "y": 380,
         "wires": [
             [
                 "e64a5635.642638"
@@ -797,12 +806,7 @@
             },
             {
                 "t": "eq",
-                "v": "addStars",
-                "vt": "str"
-            },
-            {
-                "t": "eq",
-                "v": "removeStars",
+                "v": "buyStars",
                 "vt": "str"
             },
             {
@@ -811,7 +815,7 @@
         ],
         "checkall": "true",
         "repair": false,
-        "outputs": 7,
+        "outputs": 6,
         "x": 380,
         "y": 160,
         "wires": [
@@ -831,9 +835,8 @@
                 "7cf93f67.c8df8"
             ],
             [
-                "133890ea.e6691f"
-            ],
-            []
+                "163c8ace.5677b5"
+            ]
         ]
     },
     {
@@ -856,8 +859,8 @@
         "id": "7cf93f67.c8df8",
         "type": "function",
         "z": "47d73e76.0a224",
-        "name": "addStars",
-        "func": "msg.userBank.stars += msg.payload.value\nif (msg.userBank.stars < 0) {\n    msg.userBank.stars = 0\n}\nreturn msg;",
+        "name": "buyStars",
+        "func": "\nconst starValue = 100\n\nconst userCoins = msg.userBank.coins\n\nconst desiredStars = msg.payload.value\n\nconst desiredValue = starValue * desiredStars\n\nif (desiredValue > userCoins) {\n    // too poor\n    return msg;\n}\n\nmsg.userBank.coins -= desiredValue\nmsg.userBank.stars += desiredStars\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 540,
@@ -895,8 +898,8 @@
         "syntax": "mustache",
         "template": "---\nuserId: {{ userId }}\naction: {{ topic }}\nvalue: {{ payload }}",
         "output": "yaml",
-        "x": 620,
-        "y": 660,
+        "x": 480,
+        "y": 260,
         "wires": [
             [
                 "11d7e96f.d9e057"
@@ -913,42 +916,9 @@
         "console": false,
         "tostatus": false,
         "complete": "false",
-        "x": 1090,
-        "y": 660,
+        "x": 830,
+        "y": 240,
         "wires": []
-    },
-    {
-        "id": "3ba979af.a21be6",
-        "type": "json",
-        "z": "10cb60ee.21f7af",
-        "name": "",
-        "property": "payload",
-        "action": "",
-        "pretty": false,
-        "x": 930,
-        "y": 660,
-        "wires": [
-            [
-                "74fdc550.132b2c"
-            ]
-        ]
-    },
-    {
-        "id": "ce55b3a2.60016",
-        "type": "http in",
-        "z": "10cb60ee.21f7af",
-        "name": "",
-        "url": "/api/bank",
-        "method": "get",
-        "upload": false,
-        "swaggerDoc": "",
-        "x": 110,
-        "y": 180,
-        "wires": [
-            [
-                "311f498.9af65b6"
-            ]
-        ]
     },
     {
         "id": "f26f80bf.7566f",
@@ -965,44 +935,6 @@
                 "96151a5e.763098"
             ]
         ]
-    },
-    {
-        "id": "39c3eaa3.ea5976",
-        "type": "change",
-        "z": "10cb60ee.21f7af",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "statusCode",
-                "pt": "msg",
-                "to": "200",
-                "tot": "num"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 580,
-        "y": 180,
-        "wires": [
-            [
-                "684d36af.295038"
-            ]
-        ]
-    },
-    {
-        "id": "684d36af.295038",
-        "type": "http response",
-        "z": "10cb60ee.21f7af",
-        "name": "",
-        "statusCode": "",
-        "headers": {},
-        "x": 770,
-        "y": 180,
-        "wires": []
     },
     {
         "id": "21e7d574.d02b7a",
@@ -1866,76 +1798,6 @@
         ]
     },
     {
-        "id": "e80bc5d1.5923a8",
-        "type": "change",
-        "z": "ff75d04f.62496",
-        "name": "",
-        "rules": [
-            {
-                "t": "set",
-                "p": "topic",
-                "pt": "msg",
-                "to": "banks",
-                "tot": "str"
-            }
-        ],
-        "action": "",
-        "property": "",
-        "from": "",
-        "to": "",
-        "reg": false,
-        "x": 490,
-        "y": 1080,
-        "wires": [
-            [
-                "46548650.6d59e8"
-            ]
-        ]
-    },
-    {
-        "id": "46548650.6d59e8",
-        "type": "link out",
-        "z": "ff75d04f.62496",
-        "name": "",
-        "links": [
-            "e3a13a28.5e7b68",
-            "a9740e20.734df"
-        ],
-        "x": 595,
-        "y": 1080,
-        "wires": []
-    },
-    {
-        "id": "c65d2cd0.3e13b",
-        "type": "comment",
-        "z": "ff75d04f.62496",
-        "name": "Refresh bank display",
-        "info": "",
-        "x": 340,
-        "y": 1040,
-        "wires": []
-    },
-    {
-        "id": "49b8374c.5af4b8",
-        "type": "inject",
-        "z": "ff75d04f.62496",
-        "name": "",
-        "topic": "",
-        "payload": "",
-        "payloadType": "date",
-        "repeat": "",
-        "crontab": "",
-        "once": false,
-        "onceDelay": 0.1,
-        "x": 140,
-        "y": 1120,
-        "wires": [
-            [
-                "15153f1a.5d5361"
-            ]
-        ]
-    },
-    {
         "id": "22f60cc0.b14bf4",
         "type": "comment",
         "z": "ff75d04f.62496",
@@ -2003,22 +1865,6 @@
         "noerr": 0,
         "x": 550,
         "y": 120,
-        "wires": [
-            [
-                "8f0b0f9e.a477f"
-            ]
-        ]
-    },
-    {
-        "id": "133890ea.e6691f",
-        "type": "function",
-        "z": "47d73e76.0a224",
-        "name": "removeStars",
-        "func": "msg.userBank.stars -= msg.payload.value\nif (msg.userBank.stars < 0) {\n    msg.userBank.stars = 0\n}\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "x": 550,
-        "y": 280,
         "wires": [
             [
                 "8f0b0f9e.a477f"
@@ -2190,13 +2036,15 @@
         "type": "function",
         "z": "5624e464.08ccfc",
         "name": "Store username",
-        "func": "const users = global.get('users') || {}\n\nconst userId = msg.userId\nconst username = msg.payload\n\nconst user = users[userId]\n\nuser.username = username\n\n// store back\n// users[userId] = users\n// global.set('users', users)\n\nreturn msg;",
+        "func": "const users = global.get('users') || {}\n\nconst userId = msg.userId\nconst username = msg.payload.substring(0, 25)\n\nconst user = users[userId]\n\nuser.username = username\n\n// store back\n// users[userId] = users\n// global.set('users', users)\n\nreturn msg;",
         "outputs": 1,
         "noerr": 0,
         "x": 1100,
         "y": 500,
         "wires": [
-            []
+            [
+                "faec261e.ad7198"
+            ]
         ]
     },
     {
@@ -2215,7 +2063,7 @@
         "repair": false,
         "outputs": 1,
         "x": 1070,
-        "y": 580,
+        "y": 660,
         "wires": [
             [
                 "1d3dadb0.59f042"
@@ -2233,7 +2081,7 @@
         "tostatus": false,
         "complete": "false",
         "x": 1230,
-        "y": 580,
+        "y": 660,
         "wires": []
     },
     {
@@ -2287,8 +2135,8 @@
         "name": "",
         "scope": null,
         "uncaught": false,
-        "x": 380,
-        "y": 340,
+        "x": 680,
+        "y": 360,
         "wires": [
             []
         ]
@@ -2304,8 +2152,8 @@
         "syntax": "mustache",
         "template": "{{payload.userId}}: {{userBank.stars}}⭐,{{userBank.coins}}💲",
         "output": "str",
-        "x": 770,
-        "y": 240,
+        "x": 950,
+        "y": 200,
         "wires": [
             []
         ]
@@ -2351,13 +2199,15 @@
         "z": "10cb60ee.21f7af",
         "name": "",
         "env": [],
-        "x": 770,
-        "y": 660,
+        "x": 630,
+        "y": 260,
         "wires": [
             [
-                "3ba979af.a21be6"
+                "74fdc550.132b2c"
             ],
-            []
+            [
+                "939d8aa3.bb45d8"
+            ]
         ]
     },
     {
@@ -2374,34 +2224,6 @@
         "x": 1000,
         "y": 900,
         "wires": []
-    },
-    {
-        "id": "311f498.9af65b6",
-        "type": "subflow:c2d341a8.d003e",
-        "z": "10cb60ee.21f7af",
-        "name": "",
-        "env": [],
-        "x": 340,
-        "y": 180,
-        "wires": [
-            [
-                "39c3eaa3.ea5976"
-            ]
-        ]
-    },
-    {
-        "id": "15153f1a.5d5361",
-        "type": "subflow:c2d341a8.d003e",
-        "z": "ff75d04f.62496",
-        "name": "",
-        "env": [],
-        "x": 310,
-        "y": 1080,
-        "wires": [
-            [
-                "e80bc5d1.5923a8"
-            ]
-        ]
     },
     {
         "id": "96151a5e.763098",
@@ -2423,28 +2245,12 @@
         "z": "ff75d04f.62496",
         "name": "",
         "links": [
-            "ee381988.b15428"
+            "ee381988.b15428",
+            "9f177e4e.ccbd3"
         ],
         "x": 1095,
         "y": 800,
         "wires": []
-    },
-    {
-        "id": "ee381988.b15428",
-        "type": "link in",
-        "z": "ff75d04f.62496",
-        "name": "",
-        "links": [
-            "6728167c.8bf548",
-            "c7c533f2.b6601"
-        ],
-        "x": 175,
-        "y": 1080,
-        "wires": [
-            [
-                "15153f1a.5d5361"
-            ]
-        ]
     },
     {
         "id": "eea25a96.d8cab8",
@@ -2471,10 +2277,295 @@
         "z": "5624e464.08ccfc",
         "name": "refreshBanks",
         "links": [
-            "ee381988.b15428"
+            "ee381988.b15428",
+            "9f177e4e.ccbd3"
         ],
         "x": 1035,
         "y": 540,
+        "wires": []
+    },
+    {
+        "id": "2aabbab5.1ad9e6",
+        "type": "link out",
+        "z": "5624e464.08ccfc",
+        "name": "buyStars",
+        "links": [
+            "2977bff9.62cc2"
+        ],
+        "x": 1035,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "dac401ea.e58ac",
+        "type": "subflow:47d73e76.0a224",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "env": [],
+        "x": 510,
+        "y": 480,
+        "wires": [
+            [
+                "4ee10a57.1159e4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2977bff9.62cc2",
+        "type": "link in",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "links": [
+            "2aabbab5.1ad9e6"
+        ],
+        "x": 195,
+        "y": 480,
+        "wires": [
+            [
+                "cbd8baad.55cd98"
+            ]
+        ]
+    },
+    {
+        "id": "cbd8baad.55cd98",
+        "type": "template",
+        "z": "10cb60ee.21f7af",
+        "name": "buyStars",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "---\nuserId: {{ userId }}\naction: {{ topic }}\nvalue: {{ payload }}",
+        "output": "yaml",
+        "x": 320,
+        "y": 480,
+        "wires": [
+            [
+                "dac401ea.e58ac"
+            ]
+        ]
+    },
+    {
+        "id": "939d8aa3.bb45d8",
+        "type": "debug",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "error",
+        "targetType": "msg",
+        "x": 820,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "163c8ace.5677b5",
+        "type": "template",
+        "z": "47d73e76.0a224",
+        "name": "Unsupported",
+        "field": "error",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Unsupported method: `{{payload}}`",
+        "output": "str",
+        "x": 670,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "135162d7.77e9fd",
+        "type": "change",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "banks",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 950,
+        "y": 620,
+        "wires": [
+            [
+                "f3ae4eff.b789c"
+            ]
+        ]
+    },
+    {
+        "id": "f3ae4eff.b789c",
+        "type": "link out",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "links": [
+            "e3a13a28.5e7b68",
+            "a9740e20.734df"
+        ],
+        "x": 1055,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "a9b34e92.ee72a",
+        "type": "comment",
+        "z": "10cb60ee.21f7af",
+        "name": "Refresh bank display",
+        "info": "",
+        "x": 800,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "57a3d81c.2646c8",
+        "type": "inject",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 120,
+        "y": 640,
+        "wires": [
+            [
+                "88e4c406.e32e78"
+            ]
+        ]
+    },
+    {
+        "id": "ef811023.34725",
+        "type": "subflow:c2d341a8.d003e",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "env": [],
+        "x": 770,
+        "y": 620,
+        "wires": [
+            [
+                "135162d7.77e9fd"
+            ]
+        ]
+    },
+    {
+        "id": "9f177e4e.ccbd3",
+        "type": "link in",
+        "z": "10cb60ee.21f7af",
+        "name": "Refresh bank display",
+        "links": [
+            "6728167c.8bf548",
+            "c7c533f2.b6601",
+            "d9f82389.b95b6"
+        ],
+        "x": 635,
+        "y": 620,
+        "wires": [
+            [
+                "ef811023.34725"
+            ]
+        ]
+    },
+    {
+        "id": "faec261e.ad7198",
+        "type": "link out",
+        "z": "5624e464.08ccfc",
+        "name": "",
+        "links": [
+            "7272c47a.74bd7c"
+        ],
+        "x": 1220,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "d9f82389.b95b6",
+        "type": "link out",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "links": [
+            "9f177e4e.ccbd3"
+        ],
+        "x": 455,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "88e4c406.e32e78",
+        "type": "change",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "rules": [
+            {
+                "t": "delete",
+                "p": "_socketId",
+                "pt": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 300,
+        "y": 620,
+        "wires": [
+            [
+                "d9f82389.b95b6"
+            ]
+        ]
+    },
+    {
+        "id": "c665bf2f.2c7a5",
+        "type": "comment",
+        "z": "10cb60ee.21f7af",
+        "name": "Everybody needs to know!",
+        "info": "",
+        "x": 310,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "7272c47a.74bd7c",
+        "type": "link in",
+        "z": "10cb60ee.21f7af",
+        "name": "Refresh bank display (all)",
+        "links": [
+            "4ee10a57.1159e4",
+            "faec261e.ad7198"
+        ],
+        "x": 155,
+        "y": 600,
+        "wires": [
+            [
+                "88e4c406.e32e78"
+            ]
+        ]
+    },
+    {
+        "id": "4ee10a57.1159e4",
+        "type": "link out",
+        "z": "10cb60ee.21f7af",
+        "name": "",
+        "links": [
+            "7272c47a.74bd7c"
+        ],
+        "x": 635,
+        "y": 460,
         "wires": []
     }
 ]
