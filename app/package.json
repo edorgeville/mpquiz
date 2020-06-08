@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "node-red": "^1.0.6",
+    "node-red-contrib-easing": "0.1.6",
     "node-red-contrib-mytimeout": "3.2.0",
     "node-red-contrib-uibuilder": "2.0.7",
     "vue-cookies": "^1.7.0"

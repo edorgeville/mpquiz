@@ -9,7 +9,7 @@
 var app1 = new Vue({
   el: '#app',
   data: {
-    question: 'No question yet',
+    question: '',
     questionIndex: null,
     answer: 'radio1',
     prompts: [
@@ -30,9 +30,11 @@ var app1 = new Vue({
     ],
     sortBy: 'stars',
     sortDesc: true,
-    currentModifier: { win: {}, lose: {} },
+    currentModifier: null,
+    // currentModifier: { win: {}, lose: {} },
     username: '',
-    sent: false
+    sent: false,
+    currentRightAnswer: null
   },
   computed: {
     canBuyStar: function () {
@@ -49,9 +51,6 @@ var app1 = new Vue({
     },
     myScore: function () {
       return `💲 ${this.myCoins} ⭐ ${this.myStars}`
-    },
-    questionLabel: function () {
-      return `Question ${this.questionIndex}: ${this.question}`
     },
     userId: function () {
       function makeId (length) {
@@ -171,6 +170,7 @@ var app1 = new Vue({
         vueApp.questionIndex = msg.payload.index
         vueApp.prompts = msg.payload.prompts
         vueApp.sent = false
+        vueApp.currentRightAnswer = null
       }
       if (msg.topic === 'timeleft') {
         vueApp.timeleft = msg.payload
@@ -186,6 +186,9 @@ var app1 = new Vue({
       }
       if (msg.topic === 'currentModifier') {
         vueApp.currentModifier = msg.payload
+      }
+      if (msg.topic === 'currentRightAnswer') {
+        vueApp.currentRightA = msg.payload
       }
     })
 
