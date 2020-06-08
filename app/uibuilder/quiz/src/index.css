@@ -28,3 +28,7 @@ h1, h2 {
 h1 img {
   max-width: 80%;
 }
+
+#btn-radios-1 {
+  width: 100%;
+}
