@@ -18,7 +18,7 @@ var app1 = new Vue({
       { text: 'Standby', value: 'Standby' },
       { text: 'Standby', value: 'Standby' }
     ],
-    timeMessage: 'Standby',
+    timeVariant: 'Standby',
     timeleft: 0,
     scores: {},
     banks: {},
@@ -62,6 +62,7 @@ var app1 = new Vue({
         }
         return result
       }
+      Vue.$cookies.config('1y')
       var userId = Vue.$cookies.get('userId')
       if (userId == null) {
         userId = makeId(4)
@@ -130,6 +131,11 @@ var app1 = new Vue({
         topic: 'buyStars',
         payload: 1
       })
+      this.$bvToast.toast(`You know have ${this.myStars + 1} stars`, {
+        title: 'You bought a star!',
+        autoHideDelay: 5000,
+        variant: 'success'
+      })
     },
     rowClass: function (item, type) {
       if (!item || type !== 'row') return
@@ -175,8 +181,8 @@ var app1 = new Vue({
       if (msg.topic === 'timeleft') {
         vueApp.timeleft = msg.payload
       }
-      if (msg.topic === 'timeMessage') {
-        vueApp.timeMessage = msg.payload
+      if (msg.topic === 'timeVariant') {
+        vueApp.timeVariant = msg.payload
       }
       if (msg.topic === 'scores') {
         vueApp.scores = msg.payload
@@ -200,6 +206,7 @@ var app1 = new Vue({
         userId: vueApp.userId,
         payload: {}
       })
+      vueApp.refreshBanks()
     })
     // If Server Time Offset changes
     uibuilder.onChange('serverTimeOffset', function (newVal) {

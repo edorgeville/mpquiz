@@ -18,7 +18,7 @@ var app1 = new Vue({
       { text: 'Standby', value: 'Standby' },
       { text: 'Standby', value: 'Standby' }
     ],
-    timeMessage: 'Standby',
+    timeVariant: 'Standby',
     timeleft: 0,
     scores: {},
     banks: {},
@@ -113,8 +113,8 @@ var app1 = new Vue({
       if (msg.topic === 'timeleft') {
         vueApp.timeleft = msg.payload
       }
-      if (msg.topic === 'timeMessage') {
-        vueApp.timeMessage = msg.payload
+      if (msg.topic === 'timeVariant') {
+        vueApp.timeVariant = msg.payload
       }
       if (msg.topic === 'scores') {
         vueApp.scores = msg.payload

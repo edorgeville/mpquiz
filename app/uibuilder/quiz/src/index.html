@@ -55,10 +55,42 @@
     <div id="app" v-cloak>
         <b-container id="app_container">
             <h1><img src="../uibuilder/common/images/logo.png"></h1>
-            <h2>{{ myScore }}</h2>
-            <b-form-input v-model="username" placeholder="Enter your name"></b-form-input>
+            
+            <b-form-input v-model="username" placeholder="Enter your name" class="mb-3"></b-form-input>
 
-            <h2>{{ timeMessage }}: {{ timeleft }} seconds</h2>
+            <h2 class="mb-3">{{ myScore }}</h2>
+
+            <b-row class="mb-3">
+                <b-col>
+                    <b-button variant="success" v-on:click="buyStar" :disabled="!canBuyStar" id="buyStar">Buy star ⭐ (100$)</b-button>
+                </b-col>
+            </b-row>
+
+            <div v-if="currentModifier" class="mb-3">
+                <!-- <h2>Current space</h2> -->
+                <b-card
+                    :title="currentModifier.title"
+                    :img-src="currentModifier.icon"
+                    img-alt="Image"
+                    img-left
+                    tag="article"
+                    class="mb-2"
+                    :bg-variant="currentModifier.done ? '' : 'warning'"
+                    :border-variant="currentModifier.done ? 'success' : ''"
+                >
+                    <b-card-text>
+                        <b-col>{{ currentModifier.subtitle }}</b-col>
+                        <b-col>
+                            ✔ Win: {{ currentModifier.win.action }} ({{ currentModifier.win.value }})
+                        </b-col>
+                        <b-col>
+                            ❌ Lose: {{ currentModifier.lose.action }} ({{ currentModifier.lose.value }})
+                        </b-col>
+                    </b-card-text>
+                </b-card>
+            </div>
+
+            <b-progress-bar :value="timeleft" max="30" :variant="timeVariant" class="mb-3" v-if="timeleft">{{ timeleft }} seconds</b-progress-bar>
             
             <b-card :title="`Question ${questionIndex}`" v-if="question">
                 <b-card-text>
@@ -86,45 +118,18 @@
                         </b-row>
                     </b-form-group>
                 </b-card-text>
-            </b-card>
-
-            <div v-if="currentModifier">
-                <h2>Current space</h2>
-                <b-card
-                    :title="currentModifier.title"
-                    :img-src="currentModifier.icon"
-                    img-alt="Image"
-                    img-left
-                    tag="article"
-                    class="mb-2"
-                    :bg-variant="currentModifier.done ? '' : 'warning'"
-                    :border-variant="currentModifier.done ? 'success' : ''"
-                >
-                    <b-card-text>
-                        <b-col>{{ currentModifier.subtitle }}</b-col>
-                        <b-col>
-                            ✔ Win: {{ currentModifier.win.action }} x {{ currentModifier.win.value }}
-                        </b-col>
-                        <b-col>
-                            ❌ Lose: {{ currentModifier.lose.action }} x {{ currentModifier.lose.value }}
-                        </b-col>
-                    </b-card-text>
-                </b-card>
-            </div>
+            </b-card>           
 
             
-
-            <b-row>
-                <b-col>
-                    <b-button variant="success" v-on:click="buyStar" :disabled="!canBuyStar">Buy star ⭐</b-button>
-                </b-col>
-                <b-col>
-                    <b-button variant="primary" v-on:click="refreshBanks">Refresh banks 🔃</b-button>
-                </b-col>
-            </b-row>
-
-            <h2>Banks 👛</h2>
-            <b-table striped hover :items="banksTable" :sort-by.sync="sortBy" :fields="banksTableFields" :sort-desc.sync="sortDesc" :tbody-tr-class="rowClass"></b-table>
+            <div class="mb-3">
+                <h2>Banks 👛</h2>
+                <b-row>
+                    <b-col>
+                        <b-button variant="primary" v-on:click="refreshBanks">Refresh banks 🔃</b-button>
+                    </b-col>
+                </b-row>
+                <b-table striped hover :items="banksTable" :sort-by.sync="sortBy" :fields="banksTableFields" :sort-desc.sync="sortDesc" :tbody-tr-class="rowClass"></b-table>
+            </div>
 
         </b-container>
     </div>

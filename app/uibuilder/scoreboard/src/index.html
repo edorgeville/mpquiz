@@ -54,7 +54,7 @@
 <body>
     <div id="app" v-cloak>
         <b-container id="app_container">
-            <h2>{{ timeMessage }}: {{ timeleft }} seconds</h2>
+            <b-progress-bar :value="timeleft" max="30" :variant="timeVariant" class="mb-3">{{ timeleft }} seconds</b-progress-bar>
 
             <b-card header="Right answer" :title="currentRightAnswerText" v-if="currentRightAnswer">
                 <b-card-text>{{ currentRightAnswer.details }}</b-card-text>
