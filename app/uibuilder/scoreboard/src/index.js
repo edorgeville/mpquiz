@@ -9,7 +9,7 @@
 var app1 = new Vue({
   el: '#app',
   data: {
-    question: 'No question yet',
+    question: '',
     questionIndex: null,
     answer: 'radio1',
     prompts: [
@@ -30,10 +30,14 @@ var app1 = new Vue({
     ],
     sortBy: 'stars',
     sortDesc: true,
-    currentModifier: { win: {}, lose: {} },
-    username: ''
+    currentModifier: null,
+    username: '',
+    currentRightAnswer: null
   },
   computed: {
+    currentRightAnswerText: function () {
+      return this.prompts[this.currentRightAnswer.answer].text
+    },
     questionLabel: function () {
       return `Question ${this.questionIndex}: ${this.question}`
     },
@@ -120,6 +124,9 @@ var app1 = new Vue({
       }
       if (msg.topic === 'currentModifier') {
         vueApp.currentModifier = msg.payload
+      }
+      if (msg.topic === 'currentRightAnswer') {
+        vueApp.currentRightAnswer = msg.payload
       }
     })
 

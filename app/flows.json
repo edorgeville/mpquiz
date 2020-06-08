@@ -1210,8 +1210,8 @@
         "wires": [
             [
                 "9ad594da.369708",
-                "e907cfa.2dfa93",
-                "86bc5e26.6d3be"
+                "86bc5e26.6d3be",
+                "1a699b5b.09dc75"
             ]
         ]
     },
@@ -1227,22 +1227,8 @@
             "7fd316f4.49bc08",
             "77e6946b.8dab2c"
         ],
-        "x": 1055,
+        "x": 1315,
         "y": 140,
-        "wires": []
-    },
-    {
-        "id": "e907cfa.2dfa93",
-        "type": "debug",
-        "z": "ff75d04f.62496",
-        "name": "",
-        "active": true,
-        "tosidebar": true,
-        "console": false,
-        "tostatus": false,
-        "complete": "false",
-        "x": 1070,
-        "y": 180,
         "wires": []
     },
     {
@@ -2839,7 +2825,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "---\nfrom: 0\nto: 19\nduration: 1000",
+        "template": "---\nfrom: 0\nto: 19\nduration: 2000",
         "output": "yaml",
         "x": 415,
         "y": 1080,
@@ -2967,5 +2953,39 @@
             ]
         ],
         "l": false
+    },
+    {
+        "id": "1a699b5b.09dc75",
+        "type": "change",
+        "z": "ff75d04f.62496",
+        "name": "Clear currentRightAnswer",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "currentRightAnswer",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1150,
+        "y": 180,
+        "wires": [
+            [
+                "9ad594da.369708"
+            ]
+        ]
     }
 ]

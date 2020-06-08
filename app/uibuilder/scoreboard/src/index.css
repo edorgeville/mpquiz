@@ -30,7 +30,7 @@ body {
   background-blend-mode: multiply;
 }
 
-#app {
+/* #app {
   position: relative;
   width: 90%;
   height: 90%;
@@ -59,4 +59,4 @@ body {
   position: fixed;
   z-index: 100;
   padding: 1em;
-}
+} */

@@ -188,7 +188,7 @@ var app1 = new Vue({
         vueApp.currentModifier = msg.payload
       }
       if (msg.topic === 'currentRightAnswer') {
-        vueApp.currentRightA = msg.payload
+        vueApp.currentRightAnswer = msg.payload
       }
     })
 

@@ -56,34 +56,48 @@
         <b-container id="app_container">
             <h2>{{ timeMessage }}: {{ timeleft }} seconds</h2>
 
-            <b-form-group :label="`${questionLabel}`" class="mx-auto">
-                <b-form-radio-group
-                    id="btn-radios-1"
-                    v-model="answer"
-                    :options="prompts"
-                    buttons
-                    name="radios-btn-default"
-                    :disabled="disabled"
-                ></b-form-radio-group>
-            </b-form-group>
+            <b-card header="Right answer" :title="currentRightAnswerText" v-if="currentRightAnswer">
+                <b-card-text>{{ currentRightAnswer.details }}</b-card-text>
+            </b-card>
+            
+            <b-card :title="`Question ${questionIndex}`" v-if="question">
+                <b-card-text>
+                    <b-form-group :label="question" class="mx-auto">
+                        <b-form-radio-group
+                            id="btn-radios-1"
+                            v-model="answer"
+                            :options="prompts"
+                            buttons
+                            name="radios-btn-default"
+                        ></b-form-radio-group>
+                    </b-form-group>
+                </b-card-text>
+            </b-card>
 
-            <h3>Current modifier: {{ currentModifier.title }}</h3>
-            <b-row class="p-3">
-                <b-col>
-                    ✔ Win: 
-                    <ul>
-                        <li>Action: {{ currentModifier.win.action }}</li>
-                        <li>Value: {{ currentModifier.win.value }}</li>
-                    </ul>
-                </b-col>
-                <b-col>
-                    ❌ Lose 
-                    <ul>
-                        <li>Action: {{ currentModifier.lose.action }}</li>
-                        <li>Value: {{ currentModifier.lose.value }}</li>
-                    </ul>
-                </b-col>
-            </b-row>
+            <div v-if="currentModifier">
+                <h2>Current space</h2>
+                <b-card
+                    :title="currentModifier.title"
+                    :img-src="currentModifier.icon"
+                    img-alt="Image"
+                    img-left
+                    tag="article"
+                    class="mb-2"
+                    :bg-variant="currentModifier.done ? '' : 'warning'"
+                    :border-variant="currentModifier.done ? 'success' : ''"
+                >
+                    <b-card-text>
+                        <b-col>{{ currentModifier.subtitle }}</b-col>
+                        <b-col>
+                            ✔ Win: {{ currentModifier.win.action }} x {{ currentModifier.win.value }}
+                        </b-col>
+                        <b-col>
+                            ❌ Lose: {{ currentModifier.lose.action }} x {{ currentModifier.lose.value }}
+                        </b-col>
+                    </b-card-text>
+                </b-card>
+            </div>
+            
 
             <h3 class=".mt-1">Banks 👛</h3>
             <b-table striped hover :items="banksTable" :sort-by.sync="sortBy" :fields="banksTableFields" :sort-desc.sync="sortDesc"></b-table>
