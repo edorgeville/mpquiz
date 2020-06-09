@@ -1,0 +1,301 @@
+---
+  - question: La bonne réponse est la réponse A
+    prompts:
+      - Réponse A
+      - Réponse B
+      - Réponse C
+      - Réponse D
+    answer: 0
+    details: 
+  - question: Vrai ou faux? (Répondez vrai, sinon vous aurez faux)
+    prompts:
+      - Vrai
+      - Faux
+    answer: 0
+  - question: De quelle couleur était le cheval blanc d'Henri 4?
+    prompts:
+      - Bleu
+      - Blanc
+      - Rouge
+      - Vert
+    answer: 1
+    details: Bon ok fini l'entrainement
+  - question: Qu'est pour moi le père de mon père ?
+    prompts:
+      - Mon oncle
+      - Mon frère
+      - Mon neveu
+      - Mon grand-père
+    answer: 3
+  - question: Combien de voleurs accompagnaient Ali Baba ?
+    prompts:
+      - 12
+      - 40
+      - 1000
+      - 10000
+    answer: 1
+    details: Le film se nomme "Ali baba et les 40 voleurs"
+  - question: Lequel de ces nombres est un nombre premier ?
+    prompts:
+      - 13
+      - 25
+      - 32
+      - 33
+    answer: 0
+    details: 
+  - question: Combien d'années compte-t-on dans une décennie ?
+    prompts:
+      - 1
+      - 10
+      - 12
+      - 100
+    answer: 1
+    details: Un peu moins de mille, mais un peu plus que vingt cinq.
+  - question: Lequel de ces termes est synonyme de joyeux ?
+    prompts:
+      - Gai
+      - Bouleversé
+      - Désolé
+      - Navré
+    answer: 0
+  - question: Combien compte-t-on de jours durant le mois de juillet ?
+    prompts:
+      - 28
+      - 29
+      - 30
+      - 31
+    answer: 3
+    details: P'tit truc que j'ai appris quand j'étais kid. Utilise ton poing pour figure out la réponse.
+  - question: Quel âge a un enfant de 18 mois ?
+    prompts:
+      - 1 an
+      - 1 an et demi
+      - 2 ans
+      - 3 ans
+    answer: 1
+    details: Même un enfant de 17 mois l'aurait trouvée celle-là
+  - question: La somme des angles d'un triangle est égale à ?
+    prompts:
+      - 90°
+      - 180°
+      - 360°
+      - 720°
+    answer: 1
+    details: Niveau 2e année de primaire ça
+  - question: De quelle couleur étaient les yeux de Gandhi
+    prompts:
+      - Bleu
+      - Marron foncé
+      - Vairon
+      - Blancs
+    answer: 1
+    details: Pas évident à voir sur les photos en noir et blanc
+  - question: Laquelle de ces villes ou villages n'existe pas en France?
+    prompts:
+      - Condom
+      - Montcul
+      - Anus
+      - Poil
+    answer: 1
+    details: "Condom dans les Midi-Pyrénées, Montcuq (avec un Q pas un L) Sud-Ouest de France, Anus dans l'Yonne, Poil en Bourgogne."
+  - question: Quel pays a remporté la dernière coupe du monde de soccer/footbal?
+    prompts:
+      - Brésil
+      - Italie
+      - Allemagne
+      - France
+    answer: 3
+    details: En 2018, pis c'était le bordel pendant un après-midi sur St-Laurent
+  - question: En quelle année a eu lieu la dernière éruption du Vésuve?
+    prompts:
+      - 200 avant J.-C.
+      - 79
+      - 1839
+      - 1944
+    answer: 3
+    details: En pleine Seconde Guerre mondiale, le volcan détruit 3 communes. Hardcore.
+  - question: Le beurre de peanut a été inventé au Québec
+    prompts:
+      - Vrai ✔
+      - Faux ❌
+    answer: 0
+    details: Marcellus Gilmore Edson a breveté une recette de beurre de peanut en 1894 à Montréal.
+  - question: La chaine YouTube indienne T-Series a plus de subscribers que PewDiePie
+    prompts:
+      - Vrai ✔
+      - Faux ❌
+    answer: 0
+    details: "T-Series: 141 millions, PewDiePie: 105 millions"
+  - question: En ce moment, les épiceries sont fermées le dimanche
+    prompts:
+      - Vrai ✔
+      - Faux ❌
+    answer: 1
+    details: Depuis dimanche 24 mai, les épiceries sont de nouveau autorisées à ouvrir le dimanche.
+  - question: Pérouville est une vraie ville
+    prompts:
+      - Vrai ✔
+      - Faux ❌
+    answer: 1
+    details: Désolé Dimitri :(
+  - question: "Isaac Newton décrit les couleurs d'un arc-en-ciel tel que suit: rouge, orange, jaune, vert, bleu, brun et violet"
+    prompts:
+      - Vrai ✔
+      - Faux ❌
+    answer: C'était pas brun mais indigo. Brun n'est pas une couleur.
+    details: 
+  - question: Combien une paille a-t'elle de trous?
+    prompts:
+      - 1 trou
+      - 2 trous
+    answer: 0
+    details: Une paille est topologiquement le produit d'un cercle, qui a 1 trou, et d'un intervalle, qui a 0 trou. La paille a donc 1 trou. Fite me.
+  - question: En quelle année a été diffusé le premier épisode de SpongeBob Square Pants ?
+    prompts:
+      - 2005
+      - 1999
+      - 2003
+      - 2001
+    answer: 1
+  - question: Quel est le 2ème prénom (middle name) de Sonic?
+    prompts:
+      - Paul
+      - John
+      - Maurice
+      - Speed
+    answer: 2
+    details: '<img src="https://i.imgur.com/8TVb7Vj.png">'
+  - question: Lequel de ces livres n'a pas été écrit par l'autrice Kim Thùy ?
+    prompts:
+      - Vi
+      - Ru
+      - Maïmaï
+      - Aucun, ils sont tous de Kim Thùy
+    answer: 2
+    details: Maïmaï est un roman d'Aki Shimazaki, autrice québécoise originaire du Japon
+  - question: Quel est l'os le plus long du corps humain ? 
+    prompts:
+      - Tibia
+      - Fémur
+      - Humérus
+      - Calcanéus
+    answer: 1
+    details: Le fémur est également l'os le plus fort et le plus lourd du corps humain!
+  - question: En quelle année est décédé Kurt Cobain, chanteur de Nirvana ?
+    prompts:
+      - 1996
+      - 2001
+      - 2003
+      - 1994
+    answer: 3
+    details: Kurt Cobain s'est suicidé à l'aide d'une arme à feu 🔫
+  - question: En quelle année est sortie la vidéo "Leave Britney alone!" ? 
+    prompts:
+      - 2007
+      - 2010
+      - 2009
+      - 2006
+    answer: 0
+    details: 
+  - question: En 2015, quel était le ratio de piscine par personne au Québec ?
+    prompts:
+      - 1 piscine par 2 personnes
+      - 1 piscine par 16 personnes
+      - 1 piscine par 50 personnes 
+      - 1 piscine par 121 personnes 
+    answer: 1
+    details: Regardez autour de vous. Au moins une personne ici ce soir possède une piscine.
+  - question: En quelle année le parc d'attraction La Ronde a-t'il ouvert ? 
+    prompts:
+      - 1959
+      - 1975
+      - 1967
+      - 1980
+    answer: 2
+    details: La Ronde a ouvert ses portes la même année qu'Expo 67!
+  - question: Quel acteur qui joue Thor dans 8 films Marvel ? 
+    prompts:
+      - Chris Hemsworth 
+      - Chris Evans
+      - Christian Bale
+      - Chris Pratt 
+    answer: 0
+    details: 
+  - question: Combien de semaines l'album "The dark side of the moon" de Pink Floyd est resté dans le classement Billboard 200 ? 
+    prompts:
+      - 1011
+      - 720
+      - 937
+      - 883
+    answer: 2
+    details: 
+  - question: Qui est la chanteuse la plus riche au monde ? 
+    prompts: 
+      - Rihanna
+      - Beyonce
+      - Lady Gaga
+      - Katy Perry
+    answer: 0
+    details: Aux dernières nouvelles, Rihanna possédait une fortune d'environ 600 millions de dollars américains.
+  - question: Qui a peint le tableau "Girl with a pearl earring" (La jeune fille à la perle)?
+    prompts:
+      - Michelangelo Merisi da Caravaggio
+      - Johannes Vermeer
+      - Edgar Degas
+      - Claude Monet
+    answer: 1
+    details: Le saviez-vous? Claude Monet est un article de l'époque Baroque.
+  - question: Quel est le nom de la dernière ère glaciaire (celle qui a commencé il y a environ 110 000 ans et a terminé il y a 10 000 ans) dans les Alpes? 
+    prompts:
+      - Holocène
+      - Würm
+      - Günz
+      - Pléistocène
+    answer: 1
+    details:
+  - question: De quelle année à quelle année s'est déroulé la Révolution culturelle en Chine (la revolution de Mao Zedong)?
+    prompts:
+      - 1955-1962
+      - 1961-1969
+      - 1966-1976
+      - 1970-1980
+    answer: 2
+    details: Cette révolution avait pour but d'éliminer les valeurs traditionnelles et de purger le parti communiste.
+  - question: Quel portion de la masse du système solaire le soleil représente-t-il ? 
+    prompts:
+      - 80,2%
+      - 85,9%
+      - 89,6%
+      - 99,8%
+    answer: 3
+    details: Tout le reste, incluant les planètes, les planètes naines, astéroïdes, lunes, etc. ne représentent que 0.02% du système solaire
+  - question: Quel est mon numéro de téléphone
+    prompts:
+      - ***REMOVED***
+      - ***REMOVED***
+      - ***REMOVED***
+      - ***REMOVED***
+    answer: 1
+    details: N'hésitez pas à m'appeler pour en débattre.
+  - question: De quelle couleur est le chandail du trompetiste qui dit "c'est demain hihi" dans le carton d'invitation du Super Bullshit Party?
+    prompts:
+      - Bleu
+      - Brun
+      - Orange
+      - Blanc
+    answer: 2
+    details: <img src="https://media.discordapp.net/attachments/688453860032905315/719341004146343946/Copie_de_montage_final_v2_final.zip.hap.png_0001.backup_hdaoust.jpg.exe.png?width=512&height=250">
+  - question: Lequel de ces prénoms n'est pas un de mes prénoms?
+    prompts:
+      - ***REMOVED***
+      - ***REMOVED***
+      - ***REMOVED***
+      - ***REMOVED***
+    answer: 1
+    details: ***REMOVED*** est la version bretonne d'***REMOVED***, mais n'est pas un de mes prénoms. Mon nom complet est ***REMOVED*** ***REMOVED*** ***REMOVED*** ***REMOVED***-***REMOVED***.
+  - question: Avez-vous eu du fun?
+    prompts:
+      - Oui 😍
+      - Non 😡
+    answer: 0
+    details: 🤷‍♂️
