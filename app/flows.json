@@ -2647,7 +2647,7 @@
         "fieldType": "msg",
         "format": "handlebars",
         "syntax": "mustache",
-        "template": "---\nblue: 30\nred: 20\ngreen: 15\nbowserJr: 5\nbowser: 5\nbadLuck: 1",
+        "template": "---\nblue: 20\nred: 10\ngreen: 10\nbowserJr: 5\nbowser: 0\nbadLuck: 1",
         "output": "yaml",
         "x": 245,
         "y": 960,
@@ -3070,6 +3070,26 @@
         "wires": [
             [
                 "ccf28461.4b38b8"
+            ]
+        ]
+    },
+    {
+        "id": "3dec68ce.f47848",
+        "type": "inject",
+        "z": "ff75d04f.62496",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 220,
+        "y": 1400,
+        "wires": [
+            [
+                "57754ea7.3145e"
             ]
         ]
     }
