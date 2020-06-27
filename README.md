@@ -1,38 +1,36 @@
 # MPQuiz
 ## Mario Party style quiz, with powerups and endgame bullshit
 
-### Features
-- Fast paced questions
-- Coin reward system
-- Redeem coins for a star
-- Event questions:
-  - Steal a star
-  - Steal coins
-- [Bowser space](https://www.mariowiki.com/Mario_Party_5#Normal_spaces)
-  - Bowser Revolution, divides everyone's coins equally
-  - Bowser Minigame, forces everyone to play his minigames,
-  - Bowser Shuffle, shuffles coins of all players
-  - Bowser Bonus, steals a Star from the player.
-- Mini-games in teams!
-- Endgame bonus stars!
-- First to text the word *supercalifragilisticexpialidocious* to a phone number
+### Intent
+Make an interactive quiz for a group of friends, with a simple way to add questions.
 
-### Architecture
+### Introduction
+This project took about a month to create.  
+3 weeks of back and forth thinking, trying different techs, hacking stuff together, starting from scratch, etc. See [CONCEPT.md](CONCEPT.md)  
+Then I set myself a deadline, and just... did it.   
+Node-red, VueJS and a 48h almost-no-sleep weekend later, I present to you: 
 
-#### Database
-Storage options should be either:
-- Google Sheets; easy to tap into during the game, gives visibility to the users after quiz ends, but latency might be an issue
-- Firebase; realtime, might even be connected to directly by the users, sync is ensured
+![logo](app/uibuilder/common/images/logo.png)
 
-#### Back-end
-Node-red will be serving the webpages to players and communicate over a websocket connection.  
-When a user connections, they can either create a profile or use an existing one.
-Each profile gets a 4 letters UUID (e.g. A B C D); This gives 456,976 possible ids.
-Here's a non exhaustive list of necessary flows to implement:
-- Master; admin controls for the quiz
-- Spreadsheet middleware
-- 
+### Usage 
+```bash
+docker-compose up -d
+```
 
-#### Front-end
-VueJS or React should be used for front-end.
-A cookie is stored locally containing the user UUID. This UUID will be sent on websocket first connection so node-red establishes a match between profile and websocket session.
+http://localhost:1880/quiz
+http://localhost:1880/scoreboard
+http://localhost:1880/admin
+
+### Overview
+The whole quiz can be operated from node-red, and prepared in a single YAML file: [quiz.yml](app/quiz.yml)  
+Guests should only access the `/quiz` endpoint, while you can stream `/scoreboard` using OBS, for example.   
+Keep in mind this is a very early proof-of-concept, that security is nonexistant (admin is not protected, lots of client-side operation without sanity checks in the back-end, etc.). Use this with a closed group of friends, but don't use this project as-is if you intend to bring some outsiders. It will *definitely* end up with someone hacking everyone else's scores.
+
+#### Guest view
+![guest view](docs/guest.png)
+
+#### Admin view
+![admin view](docs/admin.png)
+
+### License
+See [LICENSE](LICENSE)
