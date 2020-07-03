@@ -17,9 +17,9 @@ Node-red, VueJS and a 48h almost-no-sleep weekend later, I present to you:
 docker-compose up -d
 ```
 
-http://localhost:1880/quiz
-http://localhost:1880/scoreboard
-http://localhost:1880/admin
+http://localhost:1880/quiz  
+http://localhost:1880/scoreboard  
+http://localhost:1880/admin  
 
 ### Overview
 The whole quiz can be operated from node-red, and prepared in a single YAML file: [quiz.yml](app/quiz.yml)  
